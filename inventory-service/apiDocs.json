@@ -1,0 +1,32 @@
+{
+    "title": "Items API Documentation",
+    "description": "This is the API documentation for the Items API.",
+    "version": "1.0.0",
+    "routes": [
+        {
+            "method": "GET",
+            "path": "/api/items",
+            "description": "Retrieve all items."
+        },
+        {
+            "method": "GET",
+            "path": "/api/items/:id",
+            "description": "Retrieve an item by its ID."
+        },
+        {
+            "method": "POST",
+            "path": "/api/items",
+            "description": "Create a new item."
+        },
+        {
+            "method": "PUT",
+            "path": "/api/items/:id",
+            "description": "Update an existing item by its ID."
+        },
+        {
+            "method": "DELETE",
+            "path": "/api/items/:id",
+            "description": "Delete an item by its ID."
+        }
+    ]
+}
