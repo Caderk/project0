@@ -1,3 +1,3 @@
 # project0
 
-Some instructions can be founds in the "docs" directory.
+Some instructions can be founds in the "docs" directory. (Not yet available)
