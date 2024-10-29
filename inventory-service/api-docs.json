@@ -16,7 +16,7 @@
         {
             "method": "POST",
             "path": "/api/items",
-            "description": "Create a new item."
+            "description": "Create a new item. Requires json body specifying the name field."
         },
         {
             "method": "PUT",
