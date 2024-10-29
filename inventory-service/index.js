@@ -35,7 +35,7 @@ app.get('/status', (req, res) => {
 
 // Serve API documentation
 app.get('/api-docs', (req, res) => {
-    res.sendFile(path.join(__dirname, 'apiDocs.json'));
+    res.sendFile(path.join(__dirname, 'api-docs.json'));
 });
 
 // Error handling middleware
