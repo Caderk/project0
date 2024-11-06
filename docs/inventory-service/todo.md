@@ -1,3 +1,3 @@
-# Comply documentation standards.
+# Comply documentation standards
 
-https://swagger.io/specification/
+Source: https://swagger.io/specification/

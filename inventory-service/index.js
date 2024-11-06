@@ -12,14 +12,14 @@ app.use(express.json());
 
 // Importing routes
 const items = require('./routes/items');
-app.use('/api/items', items);
+app.use('/items', items);
 
 // Simple root endpoint
 app.get('/', (req, res) => {
     res.status(200).json({
-        message: 'Welcome to the Items API',
+        message: 'Welcome to the inventory-service API',
         version: '1.0.0',
-        documentation: 'http://localhost:3001/api-docs'
+        documentation: 'https://caderk.ddns.net/inventory-service/api-docs'
     });
 });
 
