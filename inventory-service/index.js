@@ -1,7 +1,8 @@
 const express = require('express');
+const morgan = require("morgan");
 const cors = require('cors');  // Import the cors package
 const app = express();
-const port = 3001;
+const port = process.env.PORT || 3001;
 const path = require('path');
 
 // Enable CORS for all origins (adjust this in production to specific origins)
@@ -9,6 +10,9 @@ app.use(cors());
 
 // Middleware to parse JSON
 app.use(express.json());
+
+// Morgan for http request logging
+app.use(morgan('dev'));
 
 // Importing routes
 const items = require('./routes/items');
@@ -23,7 +27,7 @@ app.get('/', (req, res) => {
     });
 });
 
-// Simple root endpoint
+// Simple status check endpoint
 app.get('/status', (req, res) => {
     res.status(200).json({
         message: 'API is running',

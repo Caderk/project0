@@ -6,6 +6,10 @@ services:
       - "3000:3000"
     networks:
       - webnet
+    develop:
+      watch:
+        - action: rebuild
+          path: .
 
   inventory:
     build:
@@ -14,6 +18,10 @@ services:
       - "3001:3001"
     networks:
       - webnet
+    develop:
+      watch:
+        - action: rebuild
+          path: .
 
   nginx:
     build:
@@ -27,6 +35,10 @@ services:
       - inventory
     networks:
       - webnet
+    develop:
+      watch:
+        - action: rebuild
+          path: .
 
 networks:
   webnet:
