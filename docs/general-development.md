@@ -168,3 +168,9 @@ Then we add at the end of the file the following line:
 ```
 0 3 * * * certbot renew --post-hook "docker compose -f /home/carlos/projects/project0/docker-compose.prod.yml restart nginx" >> /home/carlos/cronjob_logs/certbot_renew.log 2>&1
 ```
+
+We also need to create the file to store the logs.
+```
+mkdir /home/carlos/cronjob_logs/
+carlos@ubuntu:~$ touch /home/carlos/cronjob_logs/certbot_renew.log
+```
