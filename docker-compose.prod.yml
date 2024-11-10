@@ -1,0 +1,41 @@
+services:
+  frontend:
+    build:
+      context: ./frontend-service
+    environment:
+      - URL=https://caderk.ddns.net
+      - PORT=3000
+    ports:
+      - "3000:3000"
+    networks:
+      - webnet
+
+  inventory:
+    build:
+      context: ./inventory-service
+    environment:
+      - URL=https://caderk.ddns.net
+      - PORT=3001
+    ports:
+      - "3001:3001"
+    networks:
+      - webnet
+
+  nginx:
+    build:
+      context: ./nginx
+      args:
+        NGINX_CONF: prod.conf
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - frontend
+      - inventory
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+    networks:
+      - webnet
+
+networks:
+  webnet:

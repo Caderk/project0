@@ -1,32 +1,224 @@
 {
-    "title": "Items API Documentation",
-    "description": "This is the API documentation for the Items API.",
+    "title": "Inventory Service API Documentation",
+    "description": "This is the API documentation for the Inventory Service API.",
     "version": "1.0.0",
-    "routes": [
+    "endpoints": [
         {
             "method": "GET",
-            "path": "/api/items",
-            "description": "Retrieve all items."
+            "path": "/",
+            "description": "Returns a welcome message with API information.",
+            "responses": {
+                "200": {
+                    "description": "Successful response.",
+                    "body": {
+                        "message": "Welcome to the inventory-service API",
+                        "version": "1.0.0",
+                        "documentation": "https://caderk.ddns.net/inventory-service/api-docs"
+                    }
+                }
+            }
         },
         {
             "method": "GET",
-            "path": "/api/items/:id",
-            "description": "Retrieve an item by its ID."
+            "path": "/status",
+            "description": "Checks the status of the API.",
+            "responses": {
+                "200": {
+                    "description": "API is running.",
+                    "body": {
+                        "message": "API is running",
+                        "status": "OK",
+                        "uptime": "Number (seconds)",
+                        "timestamp": "DateTime"
+                    }
+                }
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/api-docs",
+            "description": "Serves the API documentation file."
+        },
+        {
+            "method": "GET",
+            "path": "/items",
+            "description": "Retrieves all items.",
+            "responses": {
+                "200": {
+                    "description": "A list of items.",
+                    "body": [
+                        {
+                            "id": "integer",
+                            "name": "string"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "method": "GET",
+            "path": "/items/:id",
+            "description": "Retrieves an item by its ID.",
+            "parameters": {
+                "path": {
+                    "id": {
+                        "type": "integer",
+                        "description": "The ID of the item."
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "Item found.",
+                    "body": {
+                        "id": "integer",
+                        "name": "string"
+                    }
+                },
+                "404": {
+                    "description": "Item not found.",
+                    "body": {
+                        "message": "Item not found."
+                    }
+                }
+            }
         },
         {
             "method": "POST",
-            "path": "/api/items",
-            "description": "Create a new item. Requires json body specifying the name field."
+            "path": "/items",
+            "description": "Creates a new item.",
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string",
+                                    "minLength": 3,
+                                    "description": "The name of the item."
+                                }
+                            },
+                            "required": ["name"]
+                        },
+                        "example": {
+                            "name": "New Item"
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "201": {
+                    "description": "Item created successfully.",
+                    "body": {
+                        "id": "integer",
+                        "name": "string"
+                    }
+                },
+                "400": {
+                    "description": "Invalid input.",
+                    "body": {
+                        "message": "Validation error message."
+                    }
+                }
+            }
         },
         {
             "method": "PUT",
-            "path": "/api/items/:id",
-            "description": "Update an existing item by its ID."
+            "path": "/items/:id",
+            "description": "Updates an existing item by its ID.",
+            "parameters": {
+                "path": {
+                    "id": {
+                        "type": "integer",
+                        "description": "The ID of the item."
+                    }
+                }
+            },
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string",
+                                    "minLength": 3,
+                                    "description": "The new name of the item."
+                                }
+                            },
+                            "required": ["name"]
+                        },
+                        "example": {
+                            "name": "Updated Item Name"
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "Item updated successfully.",
+                    "body": {
+                        "id": "integer",
+                        "name": "string"
+                    }
+                },
+                "400": {
+                    "description": "Invalid input.",
+                    "body": {
+                        "message": "Validation error message."
+                    }
+                },
+                "404": {
+                    "description": "Item not found.",
+                    "body": {
+                        "message": "Item not found."
+                    }
+                }
+            }
         },
         {
             "method": "DELETE",
-            "path": "/api/items/:id",
-            "description": "Delete an item by its ID."
+            "path": "/items/:id",
+            "description": "Deletes an item by its ID.",
+            "parameters": {
+                "path": {
+                    "id": {
+                        "type": "integer",
+                        "description": "The ID of the item."
+                    }
+                }
+            },
+            "responses": {
+                "204": {
+                    "description": "Item deleted successfully. No content in response body."
+                },
+                "404": {
+                    "description": "Item not found.",
+                    "body": {
+                        "message": "Item not found."
+                    }
+                }
+            }
         }
-    ]
+    ],
+    "models": {
+        "Item": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "description": "The unique identifier for an item."
+                },
+                "name": {
+                    "type": "string",
+                    "minLength": 3,
+                    "description": "The name of the item."
+                }
+            },
+            "required": ["id", "name"]
+        }
+    }
 }

@@ -1,7 +1,9 @@
 const express = require('express');
+const morgan = require("morgan");
 const cors = require('cors');  // Import the cors package
 const app = express();
-const port = 3001;
+const URL = process.env.URL;
+const PORT = process.env.PORT;
 const path = require('path');
 
 // Enable CORS for all origins (adjust this in production to specific origins)
@@ -10,20 +12,23 @@ app.use(cors());
 // Middleware to parse JSON
 app.use(express.json());
 
+// Morgan for http request logging
+app.use(morgan('dev'));
+
 // Importing routes
 const items = require('./routes/items');
-app.use('/api/items', items);
+app.use('/items', items);
 
 // Simple root endpoint
 app.get('/', (req, res) => {
     res.status(200).json({
-        message: 'Welcome to the Items API',
+        message: 'Welcome to the inventory-service API',
         version: '1.0.0',
-        documentation: 'http://localhost:3001/api-docs'
+        documentation: `${URL}/inventory-service/api-docs`
     });
 });
 
-// Simple root endpoint
+// Simple status check endpoint
 app.get('/status', (req, res) => {
     res.status(200).json({
         message: 'API is running',
@@ -47,6 +52,6 @@ app.use((err, req, res, next) => {
     });
 });
 
-app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
+app.listen(PORT, () => {
+    console.log(`Server is running on ${URL}:${PORT}`);
 });
