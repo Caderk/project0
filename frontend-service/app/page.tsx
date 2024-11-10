@@ -117,31 +117,31 @@ export default function Page() {
       </div>
 
       {/* Items List */}
-      <ul>
+      <table>
         {items.map((item) => (
-          <li key={item.id}>
+          <tr key={item.id}>
             {editingItemId === item.id ? (
               // Edit Mode
               <div>
-                <input
+                <td><input
                   type="text"
                   value={editingItemName}
                   onChange={(e) => setEditingItemName(e.target.value)}
-                />
-                <button onClick={handleSaveItem}>Save</button>
-                <button onClick={handleCancelEdit}>Cancel</button>
+                /></td>
+                <td><button onClick={handleSaveItem}>Save</button></td>
+                <td><button onClick={handleCancelEdit}>Cancel</button></td>
               </div>
             ) : (
               // Display Mode
               <div>
-                {item.name}{' '}
-                <button onClick={() => handleEditItem(item)}>Edit</button>{' '}
-                <button onClick={() => handleDeleteItem(item.id)}>Delete</button>
+                <td>{item.name}{' '}</td>
+                <td><button onClick={() => handleEditItem(item)}>Edit</button>{' '}</td>
+                <td><button onClick={() => handleDeleteItem(item.id)}>Delete</button></td>
               </div>
             )}
-          </li>
+          </tr>
         ))}
-      </ul>
+      </table>
     </div>
   );
 }
