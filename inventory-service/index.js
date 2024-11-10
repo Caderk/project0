@@ -2,7 +2,8 @@ const express = require('express');
 const morgan = require("morgan");
 const cors = require('cors');  // Import the cors package
 const app = express();
-const port = process.env.PORT || 3001;
+const URL = process.env.URL;
+const PORT = process.env.PORT;
 const path = require('path');
 
 // Enable CORS for all origins (adjust this in production to specific origins)
@@ -23,7 +24,7 @@ app.get('/', (req, res) => {
     res.status(200).json({
         message: 'Welcome to the inventory-service API',
         version: '1.0.0',
-        documentation: 'https://caderk.ddns.net/inventory-service/api-docs'
+        documentation: `${URL}/inventory-service/api-docs`
     });
 });
 
@@ -51,6 +52,6 @@ app.use((err, req, res, next) => {
     });
 });
 
-app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
+app.listen(PORT, () => {
+    console.log(`Server is running on ${URL}:${PORT}`);
 });
