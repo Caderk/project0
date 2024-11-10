@@ -19,9 +19,36 @@ router.get('/', (req, res) => {
     res.json(items);
 });
 
+// Array to hold connected clients
+const clients = [];
+
+// SSE endpoint
+router.get('/stream', (req, res) => {
+    // Set headers for SSE
+    res.setHeader('Content-Type', 'text/event-stream');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+
+    // Add client to the list
+    clients.push(res);
+
+    // Remove client when connection is closed
+    req.on('close', () => {
+        console.log('Client disconnected');
+        clients.splice(clients.indexOf(res), 1);
+    });
+});
+
+// Function to send updates to all clients
+function broadcast(data) {
+    clients.forEach(client => {
+        client.write(`data: ${JSON.stringify(data)}\n\n`);
+    });
+}
+
 // Get item by ID
 router.get('/:id', (req, res) => {
-    const item = items.find(i => i.id === parseInt(req.params.id));
+    const item = items.find(i => i.id === req.params.id); // Remove parseInt
     if (!item) return res.status(404).json({ message: 'Item not found' });
     res.json(item);
 });
@@ -37,11 +64,14 @@ router.post('/', (req, res) => {
     };
     items.push(item);
     res.status(201).json(item);
+
+    // Broadcast the updated items list
+    broadcast(items);
 });
 
 // Update an existing item
 router.put('/:id', (req, res) => {
-    const item = items.find(i => i.id === parseInt(req.params.id));
+    const item = items.find(i => i.id === req.params.id); // Remove parseInt
     if (!item) return res.status(404).json({ message: 'Item not found' });
 
     // Validate the request body using the schema
@@ -56,15 +86,21 @@ router.put('/:id', (req, res) => {
     // Update the item name
     item.name = req.body.name;
     res.json(item);
+
+    // Broadcast the updated items list
+    broadcast(items);
 });
 
 // Delete an item
 router.delete('/:id', (req, res) => {
-    const itemIndex = items.findIndex(i => i.id === parseInt(req.params.id));
+    const itemIndex = items.findIndex(i => i.id === req.params.id); // Remove parseInt
     if (itemIndex === -1) return res.status(404).json({ message: 'Item not found' });
 
     items.splice(itemIndex, 1);
     res.status(204).send();
+
+    // Broadcast the updated items list
+    broadcast(items);
 });
 
 module.exports = router;
