@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import styles from './my-style.module.css'
 
 interface Item {
   id: number;
@@ -102,7 +103,7 @@ export default function Page() {
   };
 
   return (
-    <div style={{ padding: '20px' }}>
+    <div className={styles.inventory} style={{ padding: '20px' }}>
       <h1>Real-Time Items List</h1>
 
       {/* Add New Item */}
@@ -117,31 +118,44 @@ export default function Page() {
       </div>
 
       {/* Items List */}
-      <table>
-        {items.map((item) => (
-          <tr key={item.id}>
-            {editingItemId === item.id ? (
-              // Edit Mode
-              <div>
-                <td><input
-                  type="text"
-                  value={editingItemName}
-                  onChange={(e) => setEditingItemName(e.target.value)}
-                /></td>
-                <td><button onClick={handleSaveItem}>Save</button></td>
-                <td><button onClick={handleCancelEdit}>Cancel</button></td>
-              </div>
-            ) : (
-              // Display Mode
-              <div>
-                <td>{item.name}{' '}</td>
-                <td><button onClick={() => handleEditItem(item)}>Edit</button>{' '}</td>
-                <td><button onClick={() => handleDeleteItem(item.id)}>Delete</button></td>
-              </div>
-            )}
-          </tr>
-        ))}
+      <table className={styles.table}>
+        <tbody>
+          {items.map((item) => (
+            <tr key={item.id}>
+              {editingItemId === item.id ? (
+                <>
+                  <td className={styles.td}>
+                    <input
+                      className={styles.td}
+                      type="text"
+                      value={editingItemName}
+                      onChange={(e) => setEditingItemName(e.target.value)}
+                    />
+                  </td>
+                  <td className={styles.td}>
+                    <button onClick={handleSaveItem}>Save</button>
+                  </td>
+                  <td className={styles.td}>
+                    <button onClick={handleCancelEdit}>Cancel</button>
+                  </td>
+                </>
+              ) : (
+                <>
+                  <td className={styles.td}>{item.name}</td>
+                  <td className={styles.td}>
+                    <button onClick={() => handleEditItem(item)}>Edit</button>
+                  </td>
+                  <td className={styles.td}>
+                    <button onClick={() => handleDeleteItem(item.id)}>Delete</button>
+                  </td>
+                </>
+              )}
+            </tr>
+          ))}
+        </tbody>
       </table>
+
+
     </div>
   );
 }
