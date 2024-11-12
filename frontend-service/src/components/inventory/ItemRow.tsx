@@ -1,13 +1,8 @@
-// app/components/ItemRow.tsx
 'use client';
 
 import { useState } from 'react';
-import styles from '../../styles/inventory/Inventory.module.css';
-
-interface Item {
-  id: number;
-  name: string;
-}
+import styles from '@styles/inventory/Inventory.module.css';
+import { Item } from '@interfaces/inventory'
 
 interface ItemRowProps {
   item: Item;

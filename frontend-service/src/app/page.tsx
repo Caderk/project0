@@ -2,11 +2,11 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Item } from '../types/inventory';
-import ItemForm from '../components/inventory/ItemForm';
-import ItemList from '../components/inventory/ItemList';
+import { Item } from '@interfaces/inventory';
+import ItemForm from '@components/inventory/ItemForm';
+import ItemList from '@components/inventory/ItemList';
 
-import { addItem, editItem, deleteItem } from '../utils/api/inventory';
+import { addItem, editItem, deleteItem } from '@utils/api/inventory';
 
 // Use addItem(name), editItem(id, name), deleteItem(id) in your handlers
 

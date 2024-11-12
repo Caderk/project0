@@ -1,9 +1,8 @@
-// app/components/ItemList.tsx
 'use client';
 
-import { Item } from '../../types/inventory';
-import ItemRow from './ItemRow';
-import styles from '../../styles/inventory/Inventory.module.css';
+import { Item } from '@interfaces/inventory';
+import ItemRow from '@components/inventory/ItemRow';
+import styles from '@styles/inventory/Inventory.module.css';
 
 interface ItemListProps {
   items: Item[];
