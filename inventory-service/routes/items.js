@@ -55,6 +55,12 @@ router.get('/:id', (req, res) => {
 
 // Create a new item
 router.post('/', (req, res) => {
+
+    // Check if the items array has reached its limit
+    if (items.length >= 20) {
+        return res.status(400).json({ message: 'Cannot add more than 20 items' });
+    }
+
     const { error } = itemSchema.validate(req.body);
     if (error) return res.status(400).json({ message: error.details[0].message });
 
