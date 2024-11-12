@@ -3,7 +3,7 @@
 
 import { Item } from '../../types/inventory';
 import ItemRow from './ItemRow';
-import styles from '../styles/Inventory.module.css';
+import styles from '../../styles/inventory/Inventory.module.css';
 
 interface ItemListProps {
   items: Item[];
