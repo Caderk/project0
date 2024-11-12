@@ -12,7 +12,7 @@
                     "description": "Successful response.",
                     "body": {
                         "message": "Welcome to the inventory-service API",
-                        "version": "1.0.0",
+                        "version": "1.0.1",
                         "documentation": "https://caderk.ddns.net/inventory-service/api-docs"
                     }
                 }
@@ -48,7 +48,7 @@
                     "description": "A list of items.",
                     "body": [
                         {
-                            "id": "integer",
+                            "id": "string",
                             "name": "string"
                         }
                     ]
@@ -62,7 +62,7 @@
             "parameters": {
                 "path": {
                     "id": {
-                        "type": "integer",
+                        "type": "string",
                         "description": "The ID of the item."
                     }
                 }
@@ -71,7 +71,7 @@
                 "200": {
                     "description": "Item found.",
                     "body": {
-                        "id": "integer",
+                        "id": "string",
                         "name": "string"
                     }
                 },
@@ -86,7 +86,7 @@
         {
             "method": "POST",
             "path": "/items",
-            "description": "Creates a new item.",
+            "description": "Creates a new item. **Cannot exceed 20 items in total.**",
             "requestBody": {
                 "required": true,
                 "content": {
@@ -112,14 +112,14 @@
                 "201": {
                     "description": "Item created successfully.",
                     "body": {
-                        "id": "integer",
+                        "id": "string",
                         "name": "string"
                     }
                 },
                 "400": {
-                    "description": "Invalid input.",
+                    "description": "Invalid input or maximum items reached.",
                     "body": {
-                        "message": "Validation error message."
+                        "message": "Validation error message or 'Cannot add more than 20 items.'"
                     }
                 }
             }
@@ -131,7 +131,7 @@
             "parameters": {
                 "path": {
                     "id": {
-                        "type": "integer",
+                        "type": "string",
                         "description": "The ID of the item."
                     }
                 }
@@ -161,7 +161,7 @@
                 "200": {
                     "description": "Item updated successfully.",
                     "body": {
-                        "id": "integer",
+                        "id": "string",
                         "name": "string"
                     }
                 },
@@ -186,7 +186,7 @@
             "parameters": {
                 "path": {
                     "id": {
-                        "type": "integer",
+                        "type": "string",
                         "description": "The ID of the item."
                     }
                 }
@@ -209,7 +209,7 @@
             "type": "object",
             "properties": {
                 "id": {
-                    "type": "integer",
+                    "type": "string",
                     "description": "The unique identifier for an item."
                 },
                 "name": {
