@@ -1,23 +1,41 @@
+// @components/inventory/ItemRow.tsx
 'use client';
 
 import { useState } from 'react';
 import styles from '@styles/inventory/Inventory.module.css';
-import { Item } from '@interfaces/inventory'
+import { Item } from '@interfaces/inventory';
 
 interface ItemRowProps {
   item: Item;
-  onEditItem: (id: number, name: string) => void;
-  onDeleteItem: (id: number) => void;
+  onEditItem: (id: string, name: string) => void;
+  onDeleteItem: (id: string) => void;
 }
 
 export default function ItemRow({ item, onEditItem, onDeleteItem }: ItemRowProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editingName, setEditingName] = useState(item.name);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (editingName.trim() === '') return;
-    onEditItem(item.id, editingName);
-    setIsEditing(false);
+    try {
+      await onEditItem(item.id, editingName);
+      setIsEditing(false);
+      setErrorMessage(null);
+    } catch (error) {
+      console.error('Error saving item:', error);
+      setErrorMessage(error.message);
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      await onDeleteItem(item.id);
+      setErrorMessage(null);
+    } catch (error) {
+      console.error('Error deleting item:', error);
+      setErrorMessage(error.message);
+    }
   };
 
   return (
@@ -44,9 +62,14 @@ export default function ItemRow({ item, onEditItem, onDeleteItem }: ItemRowProps
         {isEditing ? (
           <button onClick={() => setIsEditing(false)}>Cancel</button>
         ) : (
-          <button onClick={() => onDeleteItem(item.id)}>Delete</button>
+          <button onClick={handleDelete}>Delete</button>
         )}
       </td>
+      {errorMessage && (
+        <td className={styles.td} colSpan={3}>
+          <p style={{ color: 'red' }}>{errorMessage}</p>
+        </td>
+      )}
     </tr>
   );
 }

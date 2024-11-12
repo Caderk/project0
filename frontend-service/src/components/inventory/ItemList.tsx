@@ -6,8 +6,8 @@ import styles from '@styles/inventory/Inventory.module.css';
 
 interface ItemListProps {
   items: Item[];
-  onEditItem: (id: number, name: string) => void;
-  onDeleteItem: (id: number) => void;
+  onEditItem: (id: string, name: string) => void;
+  onDeleteItem: (id: string) => void;
 }
 
 export default function ItemList({ items, onEditItem, onDeleteItem }: ItemListProps) {

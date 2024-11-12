@@ -1,23 +1,42 @@
-// app/utils/api.ts
-export const addItem = async (name: string) => {
-    await fetch(`/inventory-service/items`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name })
-    });
-  };
-  
-  export const editItem = async (id: number, name: string) => {
-    await fetch(`/inventory-service/items/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name })
-    });
-  };
-  
-  export const deleteItem = async (id: number) => {
-    await fetch(`/inventory-service/items/${id}`, {
-      method: 'DELETE'
-    });
-  };
-  
+import {Item} from '@interfaces/inventory'
+
+export async function addItem(name: string): Promise<Item> {
+  const response = await fetch(`/inventory-service/items`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name }),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || 'Failed to add item');
+  }
+
+  return response.json();
+}
+
+export async function editItem(id: string, name: string): Promise<Item> {
+  const response = await fetch(`/inventory-service/items/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name }),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || 'Failed to edit item');
+  }
+
+  return response.json();
+}
+
+export async function deleteItem(id: string): Promise<void> {
+  const response = await fetch(`/inventory-service/items/${id}`, {
+    method: 'DELETE',
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || 'Failed to delete item');
+  }
+}
