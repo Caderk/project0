@@ -3,7 +3,7 @@ services:
     build:
       context: ./frontend-service
     environment:
-      - URL=https://caderk.ddns.net
+      - HOST=https://caderk.ddns.net
       - PORT=3000
     ports:
       - "3000:3000"
@@ -14,7 +14,7 @@ services:
     build:
       context: ./inventory-service
     environment:
-      - URL=https://caderk.ddns.net
+      - HOST=https://caderk.ddns.net
       - PORT=3001
     ports:
       - "3001:3001"
