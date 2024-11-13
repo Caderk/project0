@@ -13,7 +13,7 @@
 
 .item-2 {
     grid-area: 2 / 1 / 5 / 2;
-    background-color: magenta;
+    background-color: blue;
 }
 
 .item-3 {
@@ -23,12 +23,12 @@
 
 .item-4 {
     grid-area: 2 / 5 / 5 / 6;
-    background-color: blue;
+    background-color: magenta;
 }
 
 .item-5 {
     grid-area: 5 / 1 / 6 / 6;
-    background-color: green;
+    background-color: cyan;
 }
 
 @media (max-width: 768px) {
