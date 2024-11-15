@@ -97,6 +97,7 @@
                                 "name": {
                                     "type": "string",
                                     "minLength": 3,
+                                    "maxLength": 32,
                                     "description": "The name of the item."
                                 }
                             },
@@ -146,6 +147,7 @@
                                 "name": {
                                     "type": "string",
                                     "minLength": 3,
+                                    "maxLength": 32,
                                     "description": "The new name of the item."
                                 }
                             },
@@ -215,6 +217,7 @@
                 "name": {
                     "type": "string",
                     "minLength": 3,
+                    "maxLength": 32,
                     "description": "The name of the item."
                 }
             },
