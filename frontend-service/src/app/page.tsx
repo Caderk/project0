@@ -88,9 +88,10 @@ export default function Page() {
 
       <h1>Real-Time Items List</h1>
 
-      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-
-      <ItemForm onAddItem={handleAddItem} isDisabled={items.length >= 20} />
+      <div className="form-container">
+        <ItemForm onAddItem={handleAddItem} isDisabled={items.length >= 20} />
+        {errorMessage && <span className="error-message">{errorMessage}</span>}
+      </div>
       <ItemList
         items={items}
         onEditItem={handleEditItem}

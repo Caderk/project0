@@ -14,9 +14,3 @@
   text-align: left;
   white-space: nowrap; /* Prevents content from wrapping */
 }
-
-.form {
-  width: 100%;
-  box-sizing: border-box; 
-  margin-bottom: 20px;
-}

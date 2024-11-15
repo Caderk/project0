@@ -31,7 +31,7 @@ export default function ItemForm({ onAddItem, isDisabled }: ItemFormProps) {
             placeholder="Enter item name"
             disabled={isDisabled}
           />
-          <button onClick={handleSubmit} disabled={isDisabled}>
+          <button style={{ marginInline: '4px' }} onClick={handleSubmit} disabled={isDisabled}>
             Add Item
           </button>
         </>
