@@ -1,3 +1,4 @@
+import Link from "next/link";
 import "./globals.css";
 import { Roboto } from "next/font/google"
 
@@ -12,13 +13,24 @@ export default function RootLayout({
     <html lang="en">
       <body className={roboto.className}>
         <div className="container">
-          <div className="item-1"></div>
-          <div className="item-2"></div>
-          <div className="item-3">
+
+          <div className="header">
+            <div className="navs">
+              <Link href={"/"}>Project0</Link>
+              <Link href={"/"}>About</Link>
+              <Link href={"/"}>Contact</Link>
+            </div>
+          </div>
+
+          <div className="left-aside"></div>
+
+          <div className="main-content">
             {children}
           </div>
-          <div className="item-4"></div>
-          <div className="item-5"></div>
+
+          <div className="right-aside"></div>
+
+          <div className="footer"></div>
         </div>
       </body>
     </html>
