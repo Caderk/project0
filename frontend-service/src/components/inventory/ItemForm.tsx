@@ -2,7 +2,7 @@
 'use client';
 
 import { useState } from 'react';
-import styles from '../../styles/inventory/Inventory.module.css';
+import styles from '@styles/inventory/Inventory.module.css';
 
 interface ItemFormProps {
   onAddItem: (name: string) => void;
