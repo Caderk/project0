@@ -18,7 +18,7 @@ export default function NavBar() {
     return (
         <div className="navs">
             {links.map((links) => 
-            <Link href={links.href}>{links.label}</Link>
+            <Link key={links.href} href={links.href}>{links.label}</Link>
             )}
         </div>
     )
