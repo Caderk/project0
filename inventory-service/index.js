@@ -2,7 +2,7 @@ const express = require('express');
 const morgan = require("morgan");
 const cors = require('cors');  // Import the cors package
 const app = express();
-const URL = process.env.URL;
+const HOST = process.env.HOST;
 const PORT = process.env.PORT;
 const path = require('path');
 
@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
     res.status(200).json({
         message: 'Welcome to the inventory-service API',
         version: '1.0.0',
-        documentation: `${URL}/inventory-service/api-docs`
+        documentation: `${HOST}/inventory-service/api-docs`
     });
 });
 
@@ -53,5 +53,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`Server is running on ${URL}:${PORT}`);
+    console.log(`Server is running on ${HOST}:${PORT}`);
 });

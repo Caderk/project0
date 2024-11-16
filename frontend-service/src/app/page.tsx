@@ -10,15 +10,19 @@ import { addItem, editItem, deleteItem } from '@utils/api/inventory';
 
 // Use addItem(name), editItem(id, name), deleteItem(id) in your handlers
 
-
 export default function Page() {
   const [items, setItems] = useState<Item[]>([]);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
     // Fetch initial items list
     fetch(`/inventory-service/items`)
       .then((response) => response.json())
-      .then((data) => setItems(data));
+      .then((data) => setItems(data))
+      .catch((error) => {
+        console.error('Error fetching items:', error);
+        setErrorMessage('Failed to load items.');
+      });
 
     // Set up SSE connection
     const eventSource = new EventSource(`/inventory-service/items/stream`);
@@ -42,35 +46,38 @@ export default function Page() {
   // Handle adding a new item
   const handleAddItem = async (name: string) => {
     try {
-      addItem(name)
-      // SSE will update the items
+      await addItem(name);
+      setErrorMessage(null);
     } catch (error) {
       console.error('Error adding item:', error);
+      setErrorMessage(error.message);
     }
   };
 
   // Handle editing an item
-  const handleEditItem = async (id: number, name: string) => {
+  const handleEditItem = async (id: string, name: string) => {
     try {
-      editItem(id, name)
-      // SSE will update the items
+      await editItem(id, name);
+      setErrorMessage(null);
     } catch (error) {
       console.error('Error updating item:', error);
+      setErrorMessage(error.message);
     }
   };
 
   // Handle deleting an item
-  const handleDeleteItem = async (id: number) => {
+  const handleDeleteItem = async (id: string) => {
     try {
-      deleteItem(id)
-      // SSE will update the items
+      await deleteItem(id);
+      setErrorMessage(null);
     } catch (error) {
       console.error('Error deleting item:', error);
+      setErrorMessage(error.message);
     }
   };
 
   return (
-    <div>
+    <>
       <h1>Welcome to my personal project site!</h1>
       <p>
         Currently, this page showcases a prototype of my inventory-service implementation. It&apos;s
@@ -81,8 +88,15 @@ export default function Page() {
 
       <h1>Real-Time Items List</h1>
 
-      <ItemForm onAddItem={handleAddItem} />
-      <ItemList items={items} onEditItem={handleEditItem} onDeleteItem={handleDeleteItem} />
-    </div>
+      <div className="form-container">
+        <ItemForm onAddItem={handleAddItem} isDisabled={items.length >= 20} />
+        {errorMessage && <span className="error-message">{errorMessage}</span>}
+      </div>
+      <ItemList
+        items={items}
+        onEditItem={handleEditItem}
+        onDeleteItem={handleDeleteItem}
+      />
+    </>
   );
 }
