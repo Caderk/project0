@@ -77,7 +77,7 @@ export default function Page() {
   };
 
   return (
-    <div>
+    <>
       <h1>Welcome to my personal project site!</h1>
       <p>
         Currently, this page showcases a prototype of my inventory-service implementation. It&apos;s
@@ -97,6 +97,6 @@ export default function Page() {
         onEditItem={handleEditItem}
         onDeleteItem={handleDeleteItem}
       />
-    </div>
+    </>
   );
 }
