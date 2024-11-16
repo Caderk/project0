@@ -1,7 +1,5 @@
 /* app/styles/Inventory.module.css */
-.inventory {
-  padding: 20px;
-}
+
 
 .table {
   width: auto;
@@ -9,8 +7,7 @@
 }
 
 .td, .th {
-  border: 1px solid rgb(48, 48, 48);
-  padding: 10px;
+  border: 1px solid var(--neutral-2);
   text-align: left;
   white-space: nowrap; /* Prevents content from wrapping */
 }
