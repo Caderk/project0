@@ -10,7 +10,7 @@ interface NavLink {
 const links: NavLink[] = 
     [
         {href: '/', label: 'Project0'},
-        {href: '/about', label: 'Abouts'},
+        {href: '/about', label: 'About'},
         {href: '/contact', label: 'Contact'}
     ]
 
