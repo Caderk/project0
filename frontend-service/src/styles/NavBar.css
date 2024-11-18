@@ -1,17 +1,16 @@
 .navs {
-    position: absolute;
-    max-width: 90rem;
-    width: 100%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
     display: flex;
+    width: 100%;
+    max-width: 90rem;
+    height: 100%;
+
+    align-items: center;
 }
 
 .navs a {
     border-radius: 0.5rem;
     transition: all 125ms ease-in-out;
+
 }
 
 .navs a:first-child {
