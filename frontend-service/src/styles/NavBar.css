@@ -11,7 +11,7 @@
 
 .navs a {
     border-radius: 0.5rem;
-    transition: 125ms ease-in-out;
+    transition: all 125ms ease-in-out;
 }
 
 .navs a:first-child {
