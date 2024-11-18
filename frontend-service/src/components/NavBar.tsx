@@ -1,5 +1,4 @@
 import Link from "next/link";
-
 import "@styles/NavBar.css";
 
 interface NavLink {
@@ -7,19 +6,18 @@ interface NavLink {
     label: string;
 }
 
-const links: NavLink[] = 
-    [
-        {href: '/', label: 'Project0'},
-        {href: '/about', label: 'About'},
-        {href: '/contact', label: 'Contact'}
-    ]
+const links: NavLink[] = [
+    { href: '/', label: 'Project0' },
+    { href: '/about', label: 'About' },
+    { href: '/contact', label: 'Contact' }
+];
 
 export default function NavBar() {
     return (
         <div className="navs">
-            {links.map((links) => 
-            <Link key={links.href} href={links.href}>{links.label}</Link>
-            )}
+            {links.map((link) => (
+                <Link key={link.href} href={link.href}>{link.label}</Link>
+            ))}
         </div>
-    )
+    );
 }
