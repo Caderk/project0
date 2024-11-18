@@ -1,0 +1,15 @@
+.Link {
+    border-radius: 0.5rem;
+    transition: all 125ms ease-in-out;
+
+}
+
+.Link:hover {
+    color: var(--pastel-magenta);
+    background-color: var(--neutral-2);
+
+}
+
+.activeLink {
+    background-color: var(--neutral-2);
+}
