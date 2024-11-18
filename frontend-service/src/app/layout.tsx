@@ -1,7 +1,7 @@
 import "./globals.css";
-import { Roboto } from "next/font/google"
 import NavBar from "@components/NavBar";
 import LeftAside from "@components/LeftAside";
+import { Roboto } from "next/font/google"
 
 const roboto = Roboto({ weight: "400", subsets: ["latin"] });
 
@@ -11,8 +11,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={roboto.className}>
+    <html lang="en" className={roboto.className}>
+      <body>
         <div className="main">
 
           <div className="header">
