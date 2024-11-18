@@ -1,7 +1,7 @@
 import "./globals.css";
 import { Roboto } from "next/font/google"
 import NavBar from "@components/NavBar";
-import Link from "next/link";
+import LeftAside from "@components/LeftAside";
 
 const roboto = Roboto({ weight: "400", subsets: ["latin"] });
 
@@ -21,9 +21,7 @@ export default function RootLayout({
 
           <div className="container">
             <div className="left-aside">
-              <Link href={'/inventory'}>Inventory</Link>
-              <span>Coming soon!</span>
-              <span>Coming soon!</span>
+              <LeftAside></LeftAside>
             </div>
 
             <div className="main-content">
