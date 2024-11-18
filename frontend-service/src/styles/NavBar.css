@@ -1,7 +1,7 @@
 .navs {
+    position: absolute;
     max-width: 90rem;
     width: 100%;
-    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -10,8 +10,6 @@
 }
 
 .navs a {
-    margin-left: 1rem;
-    padding: 0.5rem;
     border-radius: 0.5rem;
     transition: 125ms ease-in-out;
 }
@@ -25,12 +23,3 @@
     background-color: var(--neutral-2);
 }
 
-a {
-    color: inherit;
-    text-decoration: none;
-}
-
-a:visited {
-    color: inherit;
-    /* Prevent visited links from turning purple */
-}
