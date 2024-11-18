@@ -3,6 +3,7 @@
 
 import { useState } from 'react';
 import styles from '@styles/inventory/Inventory.module.css';
+import Form from 'next/form'
 
 interface ItemFormProps {
   onAddItem: (name: string) => void;
@@ -19,7 +20,7 @@ export default function ItemForm({ onAddItem, isDisabled }: ItemFormProps) {
   };
 
   return (
-    <div className={styles.form}>
+    <Form className={styles.form} action={handleSubmit}>
       {isDisabled ? (
         <p style={{ color: 'red' }}>Item limit reached. Cannot add more items.</p>
       ) : (
@@ -31,11 +32,11 @@ export default function ItemForm({ onAddItem, isDisabled }: ItemFormProps) {
             placeholder="Enter item name"
             disabled={isDisabled}
           />
-          <button onClick={handleSubmit} disabled={isDisabled}>
+          <button type="submit" disabled={isDisabled}>
             Add Item
           </button>
         </>
       )}
-    </div>
+    </Form>
   );
 }
