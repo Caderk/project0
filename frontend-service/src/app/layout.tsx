@@ -24,16 +24,17 @@ export default function RootLayout({
               <LeftAside></LeftAside>
             </div>
 
-            <div className="main-content">
+            <div className="center-content">
               {children}
             </div>
 
             <div className="right-aside">
+              <span>Right Aside Content</span>
             </div>
           </div>
 
           <div className="footer">
-            <span>footer content</span>
+            <span>Footer content</span>
           </div>
 
         </div>

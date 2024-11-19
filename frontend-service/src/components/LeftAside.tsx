@@ -12,7 +12,9 @@ export default function LeftAside() {
             <Link href={'/inventory'} className={clsx('Link', { 'activeLink': pathname === '/inventory', })}>Inventory</Link >
             <span className={'Link'}>Coming soon!</span >
             <span className={'Link'}>Coming soon!</span >
-
+            <span className={'Link'}>Coming soon!</span >
+            <span className={'Link'}>Coming soon!</span >
+            <span className={'Link'}>Coming soon!</span >
         </>
 
     )
