@@ -4,7 +4,7 @@
 
 }
 
-.Link:hover {
+.Link:hover, .Link:active  {
     color: var(--pastel-magenta);
     background-color: var(--neutral-2);
 

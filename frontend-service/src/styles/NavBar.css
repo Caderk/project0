@@ -17,7 +17,7 @@
     margin-right: auto;
 }
 
-.navs a:hover {
+.navs a:hover, .navs a:active {
     color: var(--neutral-6);
     background-color: var(--neutral-2);
 }
