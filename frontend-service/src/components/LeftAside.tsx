@@ -10,7 +10,7 @@ export default function LeftAside() {
     return (
         <>
             <Link href={'/inventory'} className={clsx('Link', { 'activeLink': pathname === '/inventory', })}>Inventory</Link >
-            <span className={'Link'}>Coming soon!</span >
+            <Link href={'/digit-recognition'} className={clsx('Link', { 'activeLink': pathname === '/digit-recognition', })}>Digit Recognition</Link >
             <span className={'Link'}>Coming soon!</span >
             <span className={'Link'}>Coming soon!</span >
             <span className={'Link'}>Coming soon!</span >
