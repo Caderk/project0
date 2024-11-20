@@ -94,14 +94,16 @@ export default function Page() {
     <>
       <h1>Work in Progress!</h1>
       <span>
-        Touch might or might not work properly. You can click and drag to toggle
-        cells.
+        This app will recognize a written digit (0-9) using a neural network
+        that I&apos;ll train using an MNIST dataset.
       </span>
       <svg
         width={gridSize * cellSize}
         height={gridSize * cellSize}
         style={{
           margin: "0.5rem",
+          marginLeft: "auto",
+          marginRight: "auto",
           userSelect: "none",
           touchAction: "none", // Prevent touch scrolling
         }}
@@ -110,8 +112,10 @@ export default function Page() {
       >
         {rects}
       </svg>
-      <button onClick={handleReset}>Reset</button>
-      <button onClick={handleReset}>Reset</button>
+      <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
+        <button onClick={handleReset}>Reset</button>
+        <button style={{ textDecoration: "line-through" }}>Check</button>
+      </div>
     </>
   );
 }
