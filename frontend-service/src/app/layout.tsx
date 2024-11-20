@@ -29,12 +29,12 @@ export default function RootLayout({
             </div>
 
             <div className="right-aside">
-              <span>Right Aside Content</span>
+              <span>Right Aside Placeholder</span>
             </div>
           </div>
 
           <div className="footer">
-            <span>Footer content</span>
+            <span>Footer Placeholder</span>
           </div>
 
         </div>
