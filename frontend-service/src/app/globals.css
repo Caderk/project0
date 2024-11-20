@@ -1,167 +1,169 @@
 /* Define your custom colors */
 :root {
-    --pastel-red: #bf6060;
-    --pastel-yellow: #bfbf60;
-    --pastel-green: #60bf60;
-    --pastel-cyan: #60bfbf;
-    --pastel-blue: #6060bf;
-    --pastel-magenta: #bf60bf;
+  --pastel-red: #bf6060;
+  --pastel-yellow: #bfbf60;
+  --pastel-green: #60bf60;
+  --pastel-cyan: #60bfbf;
+  --pastel-blue: #6060bf;
+  --pastel-magenta: #bf60bf;
 
-    --neutral-1: #202020;
-    --neutral-2: #404040;
-    --neutral-3: #606060;
-    --neutral-4: #808080;
-    --neutral-5: #a0a0a0;
-    --neutral-6: #c0c0c0;
-    --neutral-7: #e0e0e0;
+  --neutral-1: #202020;
+  --neutral-2: #404040;
+  --neutral-3: #606060;
+  --neutral-4: #808080;
+  --neutral-5: #a0a0a0;
+  --neutral-6: #c0c0c0;
+  --neutral-7: #e0e0e0;
 }
 
 html {
-    font-size: 1rem;
+  font-size: 1rem;
 }
 
 body {
-    margin: 0;
-    background-color: var(--neutral-1);
-    color: var(--neutral-7);
+  margin: 0;
+  background-color: var(--neutral-1);
+  color: var(--neutral-7);
 }
 
 a {
-    /* Prevent links from being blue */
-    color: inherit;
-    text-decoration: none;
+  /* Prevent links from being blue */
+  color: inherit;
+  text-decoration: none;
 }
 
 a:visited {
-    /* Prevent visited links from turning purple */
-    color: inherit;
+  /* Prevent visited links from turning purple */
+  color: inherit;
 }
 
 .main * {
-    box-sizing: border-box;
-
+  box-sizing: border-box;
 }
 
 .main *:not(div):not(svg):not(rect) {
-    margin: 0.5rem;
-    padding: 0.5rem;
+  margin: 0.5rem;
+  padding: 0.5rem;
 }
 
 .header {
-    background-color: var(--neutral-1);
-    border-bottom: 1px solid var(--neutral-2);
+  background-color: var(--neutral-1);
+  border-bottom: 1px solid var(--neutral-2);
 
-    position: sticky;
-    top: 0;
-    width: 100%;
-    height: 4rem;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 4rem;
 
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .container {
-    display: flex;
-    margin-left: auto;
-    margin-right: auto;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
 
-    height: calc(100vh - 4rem);
-    max-width: 90rem;
-    overflow-x: scroll;
+  height: calc(100vh - 4rem);
+  max-width: 90rem;
+  overflow-x: scroll;
 }
 
 .left-aside {
-    /* Border */
-    border-right-style: solid;
-    border-left-style: solid;
-    border-width: 1px;
-    border-color: var(--neutral-2);
+  /* Border */
+  border-right-style: solid;
+  border-width: 1px;
+  border-color: var(--neutral-2);
 
-    /* position */
-    align-self: flex-start;
-    top: 4rem;
+  /* position */
+  align-self: flex-start;
+  top: 4rem;
 
-    /* Dimension */
-    width: 16rem;
-    height: 100%;
-    flex-shrink: 0;
+  /* Dimension */
+  width: 16rem;
+  height: 100%;
+  flex-shrink: 0;
 
-    /* Display */
-    display: flex;
-    flex-direction: column;
+  /* Display */
+  display: flex;
+  flex-direction: column;
 }
 
 .center-content {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
 }
 
 .right-aside {
-    /* Border */
-    border-right-style: solid;
-    border-left-style: solid;
-    border-width: 1px;
-    border-color: var(--neutral-2);
+  /* Border */
+  border-left-style: solid;
+  border-width: 1px;
+  border-color: var(--neutral-2);
 
-    /* position */
-    align-self: flex-end;
-    top: 4rem;
+  /* position */
+  align-self: flex-end;
+  top: 4rem;
 
-    /* Dimension */
-    width: 16rem;
-    height: 100%;
-    flex-shrink: 0;
+  /* Dimension */
+  width: 16rem;
+  height: 100%;
+  flex-shrink: 0;
 
-    /* Display */
-    display: flex;
-    flex-direction: column;
+  /* Display */
+  display: flex;
+  flex-direction: column;
 }
 
 .footer {
-    border-top-style: solid;
-    border-width: 1px;
-    border-color: var(--neutral-2);
+  border-top-style: solid;
+  border-width: 1px;
+  border-color: var(--neutral-2);
 
-    height: 8rem;
+  height: 8rem;
 
-    display: flex;
+  display: flex;
 }
 
 .form-container {
-    display: flex;
-    align-items: center;
-    /* Space between the form and the error message */
+  display: flex;
+  align-items: center;
+  /* Space between the form and the error message */
 }
 
 .error-message {
-    color: var(--pastel-red);
-    white-space: nowrap;
-    /* Prevents the error text from wrapping to a new line */
+  color: var(--pastel-red);
+  white-space: nowrap;
+  /* Prevents the error text from wrapping to a new line */
 }
 
 @media (max-width: 768px) {
-    .container {
-        flex-direction: column;
+  .container {
+    flex-direction: column;
+  }
+  .left-aside {
+    border-right-style: none;
+    border-bottom-style: solid;
+  }
+
+  .right-aside {
+    border-left-style: none;
+    border-top-style: solid;
+  }
+
+  .left-aside,
+  .right-aside {
+    flex-direction: row;
+    overflow-x: scroll;
+
+    height: 4rem;
+    width: 100%;
+
+    align-items: center;
+
+    > * {
+      flex-shrink: 0;
     }
-    .left-aside, .right-aside {
-        border-top-style: solid;
-        border-bottom-style: solid;
-
-        border-right-style: none;
-        border-left-style: none;
-
-        flex-direction: row;
-        overflow-x: scroll;
-
-        height: 4rem;
-        width: 100%;
-
-        align-items: center;
-
-        > * {
-            flex-shrink: 0;
-        }
-    }
+  }
 }
