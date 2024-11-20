@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 
 export default function Page() {
   const gridSize = 32; // Number of rows and columns
-  const cellSize = 16; // Size of each cell in pixels
+  const cellSize = 8; // Size of each cell in pixels
 
   // Initialize a grid state with all cells set to true (black)
   const [grid, setGrid] = useState(() => Array(gridSize * gridSize).fill(true));
@@ -110,6 +110,7 @@ export default function Page() {
       >
         {rects}
       </svg>
+      <button onClick={handleReset}>Reset</button>
       <button onClick={handleReset}>Reset</button>
     </>
   );
