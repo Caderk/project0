@@ -15,10 +15,7 @@ export default function Page() {
         interacts with multiple backend services, and is fully containerized
         using Docker.
       </p>
-      <p>
-        I&apos;m currently working on the layout, palettes, and UX design of the
-        site.
-      </p>
+      <p>The overall design of the site is still in development.</p>
     </>
   );
 }
