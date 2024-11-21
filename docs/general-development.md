@@ -166,6 +166,33 @@ node -v # should print `v22.11.0`
 npm -v # should print `10.9.0`
 ```
 
+# Setting up a Python3 development environment
+
+First, since in wsl2 "python3" comes installed by default, I would like to use it by using the alias "python". For that we will an extra line to ".bashrc":
+```
+alias python=python3
+```
+
+Update changes using this command:
+```
+source ~/.bashrc 
+```
+
+Before creating a virtual environment we need to install the python3-venv package using the following command:
+```
+sudo apt install python3.12-venv
+```
+
+To create a virtual environment
+```
+python -m venv .venv
+```
+
+To work on the virtual environment
+```
+source .venv/bin/activate
+```
+
 # Working with the production environment
 
 We can connect to the production environment using its private ip:
@@ -201,3 +228,4 @@ We also need to create the file to store the logs.
 mkdir /home/carlos/cronjob_logs/
 carlos@ubuntu:~$ touch /home/carlos/cronjob_logs/certbot_renew.log
 ```
+
