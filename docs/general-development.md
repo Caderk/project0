@@ -14,7 +14,12 @@ Replace with your email address accordingly.
 
 Source: https://docs.github.com/en/authentication/connecting-to-github-with-ssh/working-with-ssh-key-passphrases#auto-launching-ssh-agent-on-git-for-windows
 
-Then to add it to the ssh-agent as soon as I open the terminal I had to add this line to .bashrc:
+Then to add it to the ssh-agent as soon as I open the terminal we have to edit .bashrc:
+```
+sudo nano .bashrc
+```
+
+Adding this lines to the end of the file:
 ```
 # Pasted from Github
 
