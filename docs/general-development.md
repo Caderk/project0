@@ -54,31 +54,26 @@ git config --global user.name "Carlos Radtke"
 git config --global user.email carlos.radtke.a@gmail.com
 ```
 
-# Setting up a node development environment
+## Adding the SSH Key to Github
 
-## Installing Node Version Manager (NVM)
-
-Source: https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating
-
-We run the following command to download and execute the NVM install script:
+We need to copy the public key we just generated.
 ```
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+cat .ssh/id_ed25519.pub
 ```
 
-## Installing Node.js
+We add it to our Github account using this link:
+https://github.com/settings/ssh/new
 
-Source: https://nodejs.org/en/download/package-manager
+## Cloning the repository
 
-Once NVM is installed we use it to install the latest LTS version:
+To clone the repository:
 ```
-# download and install Node.js (you may need to restart the terminal)
-nvm install 22
+git clone git@github.com:Caderk/project0.git
+```
 
-# verifies the right Node.js version is in the environment
-node -v # should print `v22.11.0`
-
-# verifies the right npm version is in the environment
-npm -v # should print `10.9.0`
+To create a local develop branch tracking origin develop branch:
+```
+git checkout -b develop origin/develop
 ```
 
 # Setting up Docker
@@ -142,6 +137,33 @@ You can stop Docker from starting on boot by running:
 ```
 sudo systemctl disable docker.service
 sudo systemctl disable containerd.service
+```
+
+# Setting up a node development environment
+
+## Installing Node Version Manager (NVM)
+
+Source: https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating
+
+We run the following command to download and execute the NVM install script:
+```
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+```
+
+## Installing Node.js
+
+Source: https://nodejs.org/en/download/package-manager
+
+Once NVM is installed we use it to install the latest LTS version:
+```
+# download and install Node.js (you may need to restart the terminal)
+nvm install 22
+
+# verifies the right Node.js version is in the environment
+node -v # should print `v22.11.0`
+
+# verifies the right npm version is in the environment
+npm -v # should print `10.9.0`
 ```
 
 # Working with the production environment
