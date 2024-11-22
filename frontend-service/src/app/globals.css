@@ -26,6 +26,15 @@ body {
   color: var(--neutral-7);
 }
 
+.main * {
+  box-sizing: border-box;
+}
+
+.main *:not(div):not(svg):not(rect):not(a.inline) {
+  margin: 0.5rem;
+  padding: 0.5rem;
+}
+
 a {
   /* Prevent links from being blue */
   color: inherit;
@@ -37,13 +46,8 @@ a:visited {
   color: inherit;
 }
 
-.main * {
-  box-sizing: border-box;
-}
-
-.main *:not(div):not(svg):not(rect) {
-  margin: 0.5rem;
-  padding: 0.5rem;
+a.inline:hover, a.inline:active {
+  color: var(--neutral-6);
 }
 
 .header {

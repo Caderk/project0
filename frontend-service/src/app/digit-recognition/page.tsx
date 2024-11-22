@@ -97,6 +97,10 @@ export default function Page() {
         This app will recognize a written digit (0-9) using a neural network
         that I&apos;ll train using an MNIST dataset.
       </span>
+
+      <span>
+        I will try to reproduce the results on this paper: <a className="inline" href="https://arxiv.org/pdf/2008.10400" target="_blank" rel="noopener noreferrer">https://arxiv.org/pdf/2008.10400</a>
+      </span>
       <svg
         width={gridSize * cellSize}
         height={gridSize * cellSize}
