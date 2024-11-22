@@ -81,9 +81,9 @@ export default function Page() {
       <h1>Real-Time Items List</h1>
       <p>
         This page showcases a prototype of my inventory-service implementation. It&apos;s an Express.js API that handles CRUD operations for inventory items. It includes server-side validation with Joi, unique ID generation with UUID, and real-time data broadcasting to connected clients via SSE. Feel free to explore and interact with the service, or check out the API directly
-        here:
+        here: <a className="inline" href="https://caderk.ddns.net/inventory-service">Inventory Service API</a>
+
       </p>
-      <a href="https://caderk.ddns.net/inventory-service">Inventory Service API</a>
       <div className="form-container">
         <ItemForm onAddItem={handleAddItem} isDisabled={items.length >= 20} />
         {errorMessage && <span className="error-message">{errorMessage}</span>}
