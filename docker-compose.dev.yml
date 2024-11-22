@@ -29,6 +29,21 @@ services:
         - action: rebuild
           path: .
 
+  digit-recognition:
+    build:
+      context: ./digit-recognition-service
+    environment:
+      - HOST=http://localhost
+      - PORT=3002
+    ports:
+      - "3002:3002"
+    networks:
+      - webnet
+    develop:
+      watch:
+        - action: rebuild
+          path: .
+  
   nginx:
     build:
       context: ./nginx
@@ -39,6 +54,7 @@ services:
     depends_on:
       - frontend
       - inventory
+      - digit-recognition
     networks:
       - webnet
     develop:

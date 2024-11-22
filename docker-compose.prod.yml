@@ -21,6 +21,17 @@ services:
     networks:
       - webnet
 
+  digit-recognition:
+    build:
+      context: ./digit-recognition-service
+    environment:
+      - HOST=https://caderk.ddns.net
+      - PORT=3002
+    ports:
+      - "3002:3002"
+    networks:
+      - webnet
+
   nginx:
     build:
       context: ./nginx
