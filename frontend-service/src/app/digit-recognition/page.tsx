@@ -3,8 +3,8 @@
 import React, { useState, useEffect, useRef } from "react";
 
 export default function Page() {
-  const gridSize = 32; // Number of rows and columns
-  const cellSize = 8; // Size of each cell in pixels
+  const gridSize = 28; // Number of rows and columns
+  const cellSize = 16; // Size of each cell in pixels
 
   // Initialize a grid state with all cells set to true (black)
   const [grid, setGrid] = useState(() => Array(gridSize * gridSize).fill(true));
@@ -71,6 +71,19 @@ export default function Page() {
     setGrid(Array(gridSize * gridSize).fill(true));
   };
 
+  const handleCheck = () => {
+    // Convert the grid to a 2D array of 0-255 values
+    const pixelValues = [];
+    for (let row = 0; row < gridSize; row++) {
+      const rowValues = grid
+        .slice(row * gridSize, (row + 1) * gridSize)
+        .map((cell) => (cell ? 0 : 255)); // Map true to 255 and false to 0
+      pixelValues.push(rowValues);
+    }
+    console.log(pixelValues);
+  };
+
+
   // Generate the grid of rectangles
   const rects = [];
   for (let row = 0; row < gridSize; row++) {
@@ -99,7 +112,15 @@ export default function Page() {
       </span>
 
       <span>
-        I will try to reproduce the results on this paper: <a className="inline" href="https://arxiv.org/pdf/2008.10400" target="_blank" rel="noopener noreferrer">https://arxiv.org/pdf/2008.10400</a>
+        I will try to reproduce the results on this paper:{" "}
+        <a
+          className="inline"
+          href="https://arxiv.org/pdf/2008.10400"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          https://arxiv.org/pdf/2008.10400
+        </a>
       </span>
       <svg
         width={gridSize * cellSize}
@@ -118,7 +139,7 @@ export default function Page() {
       </svg>
       <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
         <button onClick={handleReset}>Reset</button>
-        <button style={{ textDecoration: "line-through" }}>Check</button>
+        <button onClick={handleCheck}>Check</button>
       </div>
     </>
   );
