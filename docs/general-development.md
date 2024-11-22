@@ -183,7 +183,7 @@ Before creating a virtual environment we need to install the python3-venv packag
 sudo apt install python3.12-venv
 ```
 
-To create a virtual environment
+To create a virtual environment (vscode makes it more comfortable to put it in the root of the workspace for some reason)
 ```
 python -m venv .venv
 ```
@@ -191,6 +191,11 @@ python -m venv .venv
 To work on the virtual environment
 ```
 source .venv/bin/activate
+```
+
+For an unknown reason, I needed to install setuptools:
+```
+pip install --upgrade setuptools
 ```
 
 # Working with the production environment
