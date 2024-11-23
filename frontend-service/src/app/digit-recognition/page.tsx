@@ -2,12 +2,20 @@
 
 import React, { useState, useEffect, useRef } from "react";
 
+import { predictDigit } from "@utils/api/digit-recognition";
+
 export default function Page() {
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+
   const gridSize = 28; // Number of rows and columns
   const cellSize = 16; // Size of each cell in pixels
 
   // Initialize a grid state with all cells set to true (black)
   const [grid, setGrid] = useState(() => Array(gridSize * gridSize).fill(true));
+
+  // Add a state variable to store the prediction
+  const [prediction, setPrediction] = useState<number | null>(null);
 
   const [isPointerDown, setIsPointerDown] = useState(false);
   const toggledCellsRef = useRef(new Set());
@@ -71,16 +79,25 @@ export default function Page() {
     setGrid(Array(gridSize * gridSize).fill(true));
   };
 
-  const handleCheck = () => {
+  const handleCheck = async () => {
     // Convert the grid to a 2D array of 0-255 values
     const pixelValues = [];
     for (let row = 0; row < gridSize; row++) {
       const rowValues = grid
         .slice(row * gridSize, (row + 1) * gridSize)
-        .map((cell) => (cell ? 0 : 255)); // Map true to 255 and false to 0
+        .map((cell) => (cell ? 0 : 255)); // Map true to 0 (black) and false to 255 (white)
       pixelValues.push(rowValues);
     }
     console.log(pixelValues);
+
+    try {
+      const result = await predictDigit(pixelValues);
+      setPrediction(result.predicted_digit); // Use 'predicted_digit' from the response
+      setErrorMessage(null);
+    } catch (error) {
+      console.error('Error predicting digit:', error);
+      setErrorMessage(error.message);
+    }
   };
 
 
@@ -141,6 +158,16 @@ export default function Page() {
         <button onClick={handleReset}>Reset</button>
         <button onClick={handleCheck}>Check</button>
       </div>
+      {prediction !== null && (
+        <div>
+          <h2>Predicted Digit: {prediction}</h2>
+        </div>
+      )}
+      {errorMessage && (
+        <div>
+          <h2>Error: {errorMessage}</h2>
+        </div>
+      )}
     </>
   );
 }
