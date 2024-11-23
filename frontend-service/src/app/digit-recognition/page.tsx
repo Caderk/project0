@@ -9,7 +9,7 @@ export default function Page() {
 
 
   const gridSize = 28; // Number of rows and columns
-  const cellSize = 16; // Size of each cell in pixels
+  const cellSize = 14; // Size of each cell in pixels
 
   // Initialize a grid state with all cells set to true (black)
   const [grid, setGrid] = useState(() => Array(gridSize * gridSize).fill(true));
