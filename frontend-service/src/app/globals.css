@@ -28,11 +28,20 @@ body {
 
 .main * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.main *:not(div):not(svg):not(rect):not(a.inline) {
-  margin: 0.5rem;
-  padding: 0.5rem;
+.main {
+  span,
+  a:not(span > a):not(p > a),
+  h1,
+  p,
+  input,
+  button {
+    margin: 0.5rem;
+    padding: 0.5rem;
+  }
 }
 
 a {
@@ -46,7 +55,8 @@ a:visited {
   color: inherit;
 }
 
-a.inline:hover, a.inline:active {
+a.inline:hover,
+a.inline:active {
   color: var(--neutral-6);
 }
 
