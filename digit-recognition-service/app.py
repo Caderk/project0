@@ -12,7 +12,7 @@ app = FastAPI(root_path="/digit-recognition-service")
 
 # Load the model
 model = ModelM5()
-model.load_state_dict(torch.load('logs/modelM5/model009.pth', map_location='cpu'))
+model.load_state_dict(torch.load('logs/modelM5/model009.pth', map_location='cpu', weights_only=True))
 model.eval()
 
 # Move the model to the appropriate device
