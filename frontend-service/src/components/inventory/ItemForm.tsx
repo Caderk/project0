@@ -22,7 +22,7 @@ export default function ItemForm({ onAddItem, isDisabled }: ItemFormProps) {
   return (
     <Form className={styles.form} action={handleSubmit}>
       {isDisabled ? (
-        <span style={{ color: 'red' }}>Item limit reached. Cannot add more items.</span>
+        <span className='error-message'>Item limit reached. Cannot add more items.</span>
       ) : (
         <>
           <input
