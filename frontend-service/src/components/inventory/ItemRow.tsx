@@ -68,7 +68,7 @@ export default function ItemRow({ item, onEditItem, onDeleteItem }: ItemRowProps
       </td>
       {errorMessage && (
         <td className={styles.td} colSpan={3}>
-          <p style={{ color: 'red' }}>{errorMessage}</p>
+          <span style={{ color: 'red' }}>{errorMessage}</span>
         </td>
       )}
     </tr>
