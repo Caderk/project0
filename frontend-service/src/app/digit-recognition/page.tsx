@@ -122,7 +122,7 @@ export default function Page() {
 
   return (
     <>
-      <h1>Work in Progress!</h1>
+      <h1>Handwritten Digit Recognition (WIP)</h1>
       <span>
         This app will recognize a written digit (0-9) using a neural network
         that I&apos;ll train using an MNIST dataset.
@@ -168,7 +168,7 @@ export default function Page() {
       )}
       {errorMessage && (
         <div>
-          <h2>Error: {errorMessage}</h2>
+          <h2 className="error-message">Error: {errorMessage}</h2>
         </div>
       )}
     </>
