@@ -43,6 +43,20 @@ export default function Page() {
         This app will recognize a written digit (0-9) using a neural network
         that I&apos;ll train using an MNIST dataset.
       </span>
+      <span>
+        I will try to reproduce the results on this paper:
+        <a
+          className="inline"
+          href="https://arxiv.org/pdf/2008.10400"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          https://arxiv.org/pdf/2008.10400
+        </a>
+      </span>
+      <span>
+        Draw a sigle numeric digit in the black box below, then press "Check":
+      </span>
 
       <Canvas grid={grid} setGrid={setGrid} gridSize={gridSize} />
       <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
