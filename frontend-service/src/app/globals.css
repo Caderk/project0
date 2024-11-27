@@ -59,6 +59,10 @@ a:visited {
   color: inherit;
 }
 
+a.inline {
+  color: var(--pastel-cyan)
+}
+
 a.inline:hover,
 a.inline:active {
   color: var(--neutral-6);
