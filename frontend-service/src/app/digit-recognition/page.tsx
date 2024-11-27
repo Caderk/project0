@@ -44,8 +44,7 @@ export default function Page() {
         that I&apos;ll train using an MNIST dataset.
       </span>
       <span>
-        I will try to reproduce the results on this paper:
-        <a
+        I will try to reproduce the results from this paper: <a
           className="inline"
           href="https://arxiv.org/pdf/2008.10400"
           target="_blank"
@@ -55,7 +54,7 @@ export default function Page() {
         </a>
       </span>
       <span>
-        Draw a sigle numeric digit in the black box below, then press "Check":
+        Draw a sigle numeric digit in the black box below, then press &quot;Check&quot;:
       </span>
 
       <Canvas grid={grid} setGrid={setGrid} gridSize={gridSize} />
