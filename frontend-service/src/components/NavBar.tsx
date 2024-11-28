@@ -17,7 +17,9 @@ export default function NavBar() {
         <div className="navs">
             {links.map((link) => (
                 <Link key={link.href} href={link.href}>{link.label}</Link>
-            ))}
-        </div>
+            ))
+        }
+        < Link href="https://github.com/Caderk/project0/tree/develop" target="_blank" rel="noopener noreferrer">Github</Link>
+        </div >
     );
 }
