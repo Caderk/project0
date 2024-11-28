@@ -36,6 +36,21 @@ export default function Page() {
     setGrid(Array(gridSize * gridSize).fill(true));
   };
 
+  function Display({ prediction, errorMessage }) {
+    if (errorMessage !== null) {
+      return (
+        <h2 className="error-message">{errorMessage}</h2>
+      )
+    } else
+      if (prediction !== null) {
+        return (
+          <h2>Predicted digit: {prediction}</h2>
+        )
+      } else return (
+        <h2 >Predicted digit: ?</h2>
+      )
+  }
+
   return (
     <>
       <h1>Handwritten Digit Recognition (WIP)</h1>
@@ -62,16 +77,10 @@ export default function Page() {
         <button onClick={handleReset}>Reset</button>
         <button onClick={handleCheck}>Check</button>
       </div>
-      {prediction !== null && (
-        <div>
-          <h2>Predicted Digit: {prediction}</h2>
-        </div>
-      )}
-      {errorMessage && (
-        <div>
-          <h2 className="error-message">Error: {errorMessage}</h2>
-        </div>
-      )}
+      <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
+        <Display prediction={prediction} errorMessage={errorMessage}></Display>
+      </div>
+
     </>
   );
 }
