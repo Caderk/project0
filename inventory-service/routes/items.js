@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Joi = require('joi');
 const { v4: uuidv4 } = require('uuid');
+const pool = require('../db');
 
 // In-memory data store (for example purposes)
 const items = [
@@ -15,8 +16,13 @@ const itemSchema = Joi.object({
 });
 
 // Get all items
-router.get('/', (req, res) => {
-    res.json(items);
+router.get('/', async (req, res) => {
+    try {
+        const result = await pool.query('SELECT * FROM items');
+        res.json(result.rows);
+    } catch (err) {
+        res.status(500).json({ message: 'Error fetching items', error: err.message });
+    }
 });
 
 // Array to hold connected clients
@@ -40,73 +46,97 @@ router.get('/stream', (req, res) => {
 });
 
 // Function to send updates to all clients
-function broadcast(data) {
-    clients.forEach(client => {
-        client.write(`data: ${JSON.stringify(data)}\n\n`);
-    });
+async function broadcast() {
+    try {
+        const result = await pool.query('SELECT * FROM items');
+        const data = result.rows;
+        clients.forEach(client => {
+            client.write(`data: ${JSON.stringify(data)}\n\n`);
+        });
+    } catch (err) {
+        console.error('Error broadcasting data', err);
+    }
 }
 
 // Get item by ID
-router.get('/:id', (req, res) => {
-    const item = items.find(i => i.id === req.params.id); // Remove parseInt
-    if (!item) return res.status(404).json({ message: 'Item not found' });
-    res.json(item);
+router.get('/:id', async (req, res) => {
+    try {
+        const result = await pool.query('SELECT * FROM items WHERE id = $1', [req.params.id]);
+        if (result.rows.length === 0) return res.status(404).json({ message: 'Item not found' });
+        res.json(result.rows[0]);
+    } catch (err) {
+        res.status(500).json({ message: 'Error fetching item', error: err.message });
+    }
 });
 
 // Create a new item
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
+    try {
+        // Check if the items count has reached its limit
+        const countResult = await pool.query('SELECT COUNT(*) FROM items');
+        if (parseInt(countResult.rows[0].count) >= 20) {
+            return res.status(400).json({ message: 'Cannot add more than 20 items' });
+        }
 
-    // Check if the items array has reached its limit
-    if (items.length >= 20) {
-        return res.status(400).json({ message: 'Cannot add more than 20 items' });
+        const { error } = itemSchema.validate(req.body);
+        if (error) return res.status(400).json({ message: error.details[0].message });
+
+        const id = uuidv4();
+        const { name } = req.body;
+
+        const insertResult = await pool.query(
+            'INSERT INTO items (id, name) VALUES ($1, $2) RETURNING *',
+            [id, name]
+        );
+
+        res.status(201).json(insertResult.rows[0]);
+
+        // Broadcast the updated items list
+        broadcast();
+    } catch (err) {
+        res.status(500).json({ message: 'Error creating item', error: err.message });
     }
-
-    const { error } = itemSchema.validate(req.body);
-    if (error) return res.status(400).json({ message: error.details[0].message });
-
-    const item = {
-        id: uuidv4(), // Generate a unique ID
-        name: req.body.name
-    };
-    items.push(item);
-    res.status(201).json(item);
-
-    // Broadcast the updated items list
-    broadcast(items);
 });
 
 // Update an existing item
-router.put('/:id', (req, res) => {
-    const item = items.find(i => i.id === req.params.id); // Remove parseInt
-    if (!item) return res.status(404).json({ message: 'Item not found' });
+router.put('/:id', async (req, res) => {
+    try {
+        const { error } = itemSchema.validate(req.body);
+        if (error) return res.status(400).json({ message: error.details[0].message });
 
-    // Validate the request body using the schema
-    const { error } = itemSchema.validate(req.body);
-    if (error) return res.status(400).json({ message: error.details[0].message });
+        const { name } = req.body;
+        const updateResult = await pool.query(
+            'UPDATE items SET name = $1 WHERE id = $2 RETURNING *',
+            [name, req.params.id]
+        );
 
-    // Check if the new name is the same as the existing one
-    if (item.name === req.body.name) {
-        return res.status(200).json({ message: 'No changes were made, name is already the same', item });
+        if (updateResult.rows.length === 0) return res.status(404).json({ message: 'Item not found' });
+
+        res.json(updateResult.rows[0]);
+
+        // Broadcast the updated items list
+        broadcast();
+    } catch (err) {
+        res.status(500).json({ message: 'Error updating item', error: err.message });
     }
-
-    // Update the item name
-    item.name = req.body.name;
-    res.json(item);
-
-    // Broadcast the updated items list
-    broadcast(items);
 });
 
 // Delete an item
-router.delete('/:id', (req, res) => {
-    const itemIndex = items.findIndex(i => i.id === req.params.id); // Remove parseInt
-    if (itemIndex === -1) return res.status(404).json({ message: 'Item not found' });
+router.delete('/:id', async (req, res) => {
+    try {
+        const deleteResult = await pool.query('DELETE FROM items WHERE id = $1 RETURNING *', [
+            req.params.id,
+        ]);
 
-    items.splice(itemIndex, 1);
-    res.status(204).send();
+        if (deleteResult.rows.length === 0) return res.status(404).json({ message: 'Item not found' });
 
-    // Broadcast the updated items list
-    broadcast(items);
+        res.status(204).send();
+
+        // Broadcast the updated items list
+        broadcast();
+    } catch (err) {
+        res.status(500).json({ message: 'Error deleting item', error: err.message });
+    }
 });
 
 module.exports = router;

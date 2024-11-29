@@ -3,3 +3,4 @@
 *.venv
 *__pycache__
 ignore
+inventory-service-db/data
