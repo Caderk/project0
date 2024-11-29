@@ -22,13 +22,16 @@ ssh -a 192.168.1.82
 
 ## Transfering files
 
-We can use rsync to transfer files between the development and production environments:
+We can use rsync to transfer files from the development to production environments:
 
 ```
-rsync -avz --delete --filter=":- .gitignore" /home/carlos/projects/* carlos@192.168.1.82:/home/carlos/projects
-rsync -avz --delete --filter=":- .gitignore" /home/carlos/letsencrypt_backup/* carlos@192.168.1.82:/etc/letsencrypt
-rsync -avz --delete --filter=":- .gitignore" /home/carlos/letsencrypt_backup carlos@192.168.1.82:/etc/letsencrypt/*
+rsync -avz --delete --filter=":- .gitignore" /home/carlos/projects/project0 carlos@192.168.1.82:/home/carlos/projects
+```
 
+If you want it the other way around:
+
+```
+rsync -avz --delete --filter=":- .gitignore" carlos@192.168.1.82:/home/carlos/projects/project0 /home/carlos/projects
 ```
 
 # Acquiring SSL certification (Do only on the production environment)
