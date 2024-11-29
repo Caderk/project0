@@ -1,3 +1,49 @@
+# Working with the remote machine
+
+## To ssh to remote machine
+
+Install openssh-server on the remote machine:
+
+```
+sudo apt install openssh-server
+```
+
+We can copy our ssh public key on the remote machine to authenticate without using a password:
+
+```
+ssh-copy-id carlos@192.168.1.82
+```
+
+We can connect to the remote machine using its private ip:
+
+```
+ssh -a 192.168.1.82
+```
+
+## Transfering files
+
+We can use rsync to transfer files between the development and production environments:
+
+```
+rsync -avz --delete --filter=":- .gitignore" /home/carlos/projects/* carlos@192.168.1.82:/home/carlos/projects
+rsync -avz --delete --filter=":- .gitignore" /home/carlos/letsencrypt_backup/* carlos@192.168.1.82:/etc/letsencrypt
+rsync -avz --delete --filter=":- .gitignore" /home/carlos/letsencrypt_backup carlos@192.168.1.82:/etc/letsencrypt/*
+
+```
+
+# Acquiring SSL certification (Do only on the production environment)
+
+Source: <https://certbot.eff.org/instructions?ws=other&os=snap>
+
+To acquire an SSL certificate for our DNS we can use certbot:
+
+```
+sudo snap install --classic certbot
+sudo certbot certonly --standalone -d caderk.ddns.net
+```
+
+We should in theory have a certbot command to renew the certificate in "systemctl list-timers".
+
 # Setting up Version Control
 
 ## Generating a new SSH key to connect to Github
@@ -216,46 +262,4 @@ For an unknown reason, I needed to install setuptools:
 
 ```
 pip install --upgrade setuptools
-```
-
-# Working with the production environment
-
-We can connect to the production environment using its private ip:
-
-```
-ssh -a 192.168.1.82
-```
-
-We can use rsync to transfer files between the development and production environments:
-
-```
-rsync -avz /home/carlos/projects/project0 carlos@192.168.1.82:/home/carlos/projects
-```
-
-# Acquiring SSL certification (Do only on the production environment)
-
-To acquire an SSL certificate for our DNS we can use certbot:
-
-```
-sudo apt install certbot
-sudo certbot certonly --standalone -d caderk.ddns.net
-```
-
-We should create a renewal task using chrontab:
-
-```
-sudo crontab -e
-```
-
-Then we add at the end of the file the following line:
-
-```
-0 3 * * * certbot renew --post-hook "docker compose -f /home/carlos/projects/project0/docker-compose.prod.yml restart nginx" >> /home/carlos/cronjob_logs/certbot_renew.log 2>&1
-```
-
-We also need to create the file to store the logs.
-
-```
-mkdir /home/carlos/cronjob_logs/
-carlos@ubuntu:~$ touch /home/carlos/cronjob_logs/certbot_renew.log
 ```
