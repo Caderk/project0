@@ -48,7 +48,8 @@ export default function ItemRow({ item, onEditItem, onDeleteItem }: ItemRowProps
             onChange={(e) => setEditingName(e.target.value)}
           />
         ) : (
-          item.name
+          <span>{item.name}</span>
+          
         )}
       </td>
       <td className={styles.td}>
@@ -67,7 +68,7 @@ export default function ItemRow({ item, onEditItem, onDeleteItem }: ItemRowProps
       </td>
       {errorMessage && (
         <td className={styles.td} colSpan={3}>
-          <p style={{ color: 'red' }}>{errorMessage}</p>
+          <span className='error-message'>{errorMessage}</span>
         </td>
       )}
     </tr>

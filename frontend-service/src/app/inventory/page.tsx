@@ -22,6 +22,13 @@ export default function Page() {
       .catch((error) => {
         console.error('Error fetching items:', error);
         setErrorMessage('Failed to load items.');
+        setItems([{
+          id: 'error1',
+          name: 'Couldn\'t connect to inventory-service.',
+        }, {
+          id: 'error2',
+          name: 'Couldn\'t connect to inventory-service.',
+        }])
       });
 
     // Set up SSE connection
