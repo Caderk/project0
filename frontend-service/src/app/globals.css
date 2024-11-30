@@ -129,7 +129,6 @@ a.inline:active {
 
   min-height: calc(100vh - 4rem);
   width: 100%;
-  flex-shrink: 0;
 }
 
 .footer {
