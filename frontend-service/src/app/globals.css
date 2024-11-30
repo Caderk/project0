@@ -7,6 +7,7 @@
   --pastel-blue: #6060bf;
   --pastel-magenta: #bf60bf;
 
+  --neutral-0: #151515;
   --neutral-1: #202020;
   --neutral-2: #404040;
   --neutral-3: #606060;
@@ -70,7 +71,7 @@ a.inline:active {
 }
 
 .header {
-  background-color: var(--neutral-1);
+  background-color: var(--neutral-0);
   border-bottom: 1px solid var(--neutral-2);
 
   position: sticky;
@@ -132,6 +133,8 @@ a.inline:active {
 }
 
 .footer {
+  background-color: var(--neutral-0);
+
   border-top-style: solid;
   border-width: 1px;
   border-color: var(--neutral-2);
