@@ -18,7 +18,7 @@ server {
     }
 
     location /inventory-service/ {
-        proxy_pass http://inventory:3001/;
+        proxy_pass http://inventory:3010/;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
     }
@@ -53,7 +53,7 @@ server {
     }
 
     location /inventory-service/ {
-        proxy_pass http://inventory:3001/;
+        proxy_pass http://inventory:3010/;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
     }

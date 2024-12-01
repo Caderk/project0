@@ -13,8 +13,8 @@ RUN pip install -r requirements.txt
 # Copy the rest of the application code
 COPY . .
 
-# Expose port 3002
-EXPOSE 3002
+# Expose port 3020
+EXPOSE 3020
 
 # Start the uvicorn application
-CMD ["uvicorn", "app:app", "--port", "3002", "--host", "0.0.0.0"]
+CMD ["uvicorn", "app:app", "--port", "3020", "--host", "0.0.0.0"]

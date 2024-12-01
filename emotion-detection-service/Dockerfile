@@ -18,8 +18,8 @@ RUN pip install -r requirements.txt
 # Copy the rest of the application code
 COPY . .
 
-# Expose port 3002
-EXPOSE 3003
+# Expose port 3020
+EXPOSE 3030
 
 # Start the application
 CMD ["python", "use.py"]

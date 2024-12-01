@@ -113,8 +113,8 @@ async def process_image(websocket):
 
 
 async def main():
-    async with websockets.serve(process_image, "0.0.0.0", 3003):
-        print("WebSocket server started on ws://0.0.0.0:3003")
+    async with websockets.serve(process_image, "0.0.0.0", 3030):
+        print("WebSocket server started on ws://0.0.0.0:3030")
         await asyncio.Future()  # Run forever
 
 

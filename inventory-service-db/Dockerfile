@@ -5,9 +5,9 @@ FROM postgres:15-alpine
 ENV POSTGRES_DB=inventory_db
 ENV POSTGRES_USER=inventory_user
 ENV POSTGRES_PASSWORD=inventory_pass
-
+ENV PGPORT=3011
 # Copy initialization scripts (if any)
 COPY ./initdb.d /docker-entrypoint-initdb.d/
 
 # Expose PostgreSQL port
-EXPOSE 5432
+EXPOSE 3011

@@ -15,9 +15,9 @@ services:
       context: ./inventory-service
     environment:
       - HOST=https://caderk.ddns.net
-      - PORT=3001
+      - PORT=3010
       - DATABASE_HOST=inventory-db
-      - DATABASE_PORT=5432
+      - DATABASE_PORT=3011
       - DATABASE_USER=inventory_user
       - DATABASE_PASSWORD=inventory_pass
       - DATABASE_NAME=inventory_db
@@ -25,15 +25,18 @@ services:
       inventory-db:
         condition: service_healthy
     ports:
-      - "3001:3001"
+      - "3010:3010"
     networks:
       - webnet
 
   inventory-db:
     build:
       context: ./inventory-service-db
+    environment:
+      - HOST=https://caderk.ddns.net
+      - PORT=3011
     ports:
-      - "5432:5432"
+      - "3011:3011"
     volumes:
       - ./inventory-service-db/data:/var/lib/postgresql/data
     networks:
@@ -49,11 +52,26 @@ services:
       context: ./digit-recognition-service
     environment:
       - HOST=https://caderk.ddns.net
-      - PORT=3002
+      - PORT=3020
     ports:
-      - "3002:3002"
+      - "3020:3020"
     networks:
       - webnet
+
+  emotion-detection:
+    build:
+      context: ./emotion-detection-service
+    environment:
+      - HOST=https://caderk.ddns.net
+      - PORT=3030
+    ports:
+      - "3030:3030"
+    networks:
+      - webnet
+    develop:
+      watch:
+        - action: rebuild
+          path: .
 
   nginx:
     build:
@@ -66,6 +84,8 @@ services:
     depends_on:
       - frontend
       - inventory
+      - digit-recognition
+      - emotion-detection
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt:ro
     networks:

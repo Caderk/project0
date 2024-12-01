@@ -18,7 +18,7 @@ RUN npm install
 COPY . .
 
 # Expose port 3000
-EXPOSE 3001
+EXPOSE 3010
 
 # Start the express application in production mode
 CMD ["npm", "run", "start"]

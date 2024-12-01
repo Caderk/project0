@@ -13,17 +13,15 @@ services:
       watch:
         - action: rebuild
           path: .
-    depends_on:
-      - emotion-detection
 
   inventory:
     build:
       context: ./inventory-service
     environment:
       - HOST=http://localhost
-      - PORT=3001
+      - PORT=3010
       - DATABASE_HOST=inventory-db
-      - DATABASE_PORT=5432
+      - DATABASE_PORT=3011
       - DATABASE_USER=inventory_user
       - DATABASE_PASSWORD=inventory_pass
       - DATABASE_NAME=inventory_db
@@ -31,7 +29,7 @@ services:
       inventory-db:
         condition: service_healthy
     ports:
-      - "3001:3001"
+      - "3010:3010"
     networks:
       - webnet
     develop:
@@ -42,8 +40,11 @@ services:
   inventory-db:
     build:
       context: ./inventory-service-db
+    environment:
+      - HOST=http://localhost
+      - PORT=3011
     ports:
-      - "5432:5432"
+      - "3011:3011"
     volumes:
       - ./inventory-service-db/data:/var/lib/postgresql/data
     networks:
@@ -59,9 +60,9 @@ services:
       context: ./digit-recognition-service
     environment:
       - HOST=http://localhost
-      - PORT=3002
+      - PORT=3020
     ports:
-      - "3002:3002"
+      - "3020:3020"
     networks:
       - webnet
     develop:
@@ -74,9 +75,9 @@ services:
       context: ./emotion-detection-service
     environment:
       - HOST=http://localhost
-      - PORT=3003
+      - PORT=3030
     ports:
-      - "3003:3003"
+      - "3030:3030"
     networks:
       - webnet
     develop:
