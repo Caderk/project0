@@ -22,8 +22,8 @@ const WebcamComponent = () => {
         }
 
         // Set up WebSocket connection
-        ws = new WebSocket('ws://localhost:6789');
-
+        ws = new WebSocket('ws://localhost/emotion-detection-service/ws');
+        
         ws.onopen = () => {
           console.log('WebSocket connection established');
           setSocket(ws);

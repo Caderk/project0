@@ -13,6 +13,8 @@ services:
       watch:
         - action: rebuild
           path: .
+    depends_on:
+      - emotion-detection
 
   inventory:
     build:
@@ -67,6 +69,21 @@ services:
         - action: rebuild
           path: .
 
+  emotion-detection:
+    build:
+      context: ./emotion-detection-service
+    environment:
+      - HOST=http://localhost
+      - PORT=3003
+    ports:
+      - "3003:3003"
+    networks:
+      - webnet
+    develop:
+      watch:
+        - action: rebuild
+          path: .
+
   nginx:
     build:
       context: ./nginx
@@ -78,6 +95,7 @@ services:
       - frontend
       - inventory
       - digit-recognition
+      - emotion-detection
     networks:
       - webnet
     develop:

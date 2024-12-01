@@ -31,7 +31,7 @@ emotion_labels = {
 }
 
 # Load Haar Cascade for face detection
-face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+face_cascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
 
 # Define the transformations (must match those used during training)
 transform = transforms.Compose(
@@ -43,6 +43,7 @@ transform = transforms.Compose(
         transforms.Normalize((0.5,), (0.5,)),
     ]
 )
+
 
 async def process_image(websocket):
     frame_count = 0
@@ -67,13 +68,13 @@ async def process_image(websocket):
                     scaleFactor=1.1,
                     minNeighbors=5,
                     minSize=(30, 30),
-                    flags=cv2.CASCADE_SCALE_IMAGE
+                    flags=cv2.CASCADE_SCALE_IMAGE,
                 )
 
                 emotions_data = []
 
-                for (x, y, w, h) in faces:
-                    face_roi_color = frame[y:y+h, x:x+w]
+                for x, y, w, h in faces:
+                    face_roi_color = frame[y : y + h, x : x + w]
 
                     # Preprocess the face region
                     face_gray = cv2.cvtColor(face_roi_color, cv2.COLOR_BGR2GRAY)
@@ -89,18 +90,18 @@ async def process_image(websocket):
                         predicted_emotion = emotion_labels[predicted.item()]
 
                     # Append the face coordinates and emotion to the list
-                    emotions_data.append({
-                        'x': int(x),
-                        'y': int(y),
-                        'w': int(w),
-                        'h': int(h),
-                        'emotion': predicted_emotion
-                    })
+                    emotions_data.append(
+                        {
+                            "x": int(x),
+                            "y": int(y),
+                            "w": int(w),
+                            "h": int(h),
+                            "emotion": predicted_emotion,
+                        }
+                    )
 
                 # Send the data back to the client
-                data = {
-                    'emotions': emotions_data
-                }
+                data = {"emotions": emotions_data}
                 await websocket.send(json.dumps(data))
             else:
                 # For frames that are not processed, send an empty message or skip
@@ -108,12 +109,14 @@ async def process_image(websocket):
                 await websocket.send(json.dumps({}))
         except Exception as e:
             print(f"Error: {e}")
-            await websocket.send(json.dumps({'error': 'Error processing image'}))
+            await websocket.send(json.dumps({"error": "Error processing image"}))
+
 
 async def main():
-    async with websockets.serve(process_image, "localhost", 6789):
-        print("WebSocket server started on ws://localhost:6789")
+    async with websockets.serve(process_image, "0.0.0.0", 3003):
+        print("WebSocket server started on ws://0.0.0.0:3003")
         await asyncio.Future()  # Run forever
+
 
 if __name__ == "__main__":
     asyncio.run(main())
