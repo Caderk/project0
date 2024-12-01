@@ -141,7 +141,7 @@ const WebcamComponent = () => {
 export default function Page() {
   return (
     <>
-      <h1>Emotion Recognition</h1>
+      <h1>Emotion Detection</h1>
       <WebcamComponent />
     </>
   );
