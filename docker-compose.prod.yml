@@ -68,10 +68,6 @@ services:
       - "3030:3030"
     networks:
       - webnet
-    develop:
-      watch:
-        - action: rebuild
-          path: .
 
   nginx:
     build:
