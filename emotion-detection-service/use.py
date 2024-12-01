@@ -6,7 +6,6 @@ import numpy as np
 from models.emotionCNN import EmotionCNN
 
 
-
 # Load the trained model
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = EmotionCNN().to(device)
