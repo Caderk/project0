@@ -23,7 +23,7 @@ const WebcamComponent = () => {
 
         // Set up WebSocket connection
         ws = new WebSocket('ws://localhost/emotion-detection-service/ws');
-        
+
         ws.onopen = () => {
           console.log('WebSocket connection established');
           setSocket(ws);
@@ -142,6 +142,9 @@ export default function Page() {
   return (
     <>
       <h1>Emotion Detection</h1>
+      <p>This app uses your webcam to capture your facial expressions and classifies them into one of the following emotions:</p>
+      <p>Angry, disgust, fear, happy, sad, surprise or neutral.</p>
+      <p>Please note that the model was trained on a dataset with exaggerated facial expressions (FER-2013). Therefore, to achieve accurate classifications, you may need to exaggerate your expressions as well.</p>
       <WebcamComponent />
     </>
   );
