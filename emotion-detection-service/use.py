@@ -3,8 +3,11 @@ import torch
 import torch.nn as nn
 from torchvision import transforms
 import numpy as np
+import asyncio
+import websockets
+import base64
+import json
 from models.emotionCNN import EmotionCNN
-
 
 # Load the trained model
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -27,9 +30,13 @@ emotion_labels = {
     6: "Neutral",
 }
 
+# Load Haar Cascade for face detection
+face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+
 # Define the transformations (must match those used during training)
 transform = transforms.Compose(
     [
+        transforms.ToPILImage(),
         transforms.Grayscale(num_output_channels=1),
         transforms.Resize((48, 48)),
         transforms.ToTensor(),
@@ -37,62 +44,76 @@ transform = transforms.Compose(
     ]
 )
 
-# Initialize the webcam
-cap = cv2.VideoCapture(0)
+async def process_image(websocket):
+    frame_count = 0
+    process_every_n_frames = 5  # Adjust this value as needed
 
-# Check if the webcam is opened correctly
-if not cap.isOpened():
-    print("Error: Could not open webcam.")
-    exit()
+    async for message in websocket:
+        try:
+            # Decode the base64 image
+            img_data = base64.b64decode(message)
+            nparr = np.frombuffer(img_data, np.uint8)
+            frame = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
-# Main loop
-while True:
-    # Capture frame-by-frame
-    ret, frame = cap.read()
+            frame_count += 1
 
-    if not ret:
-        print("Error: Failed to capture image")
-        break
+            if frame_count % process_every_n_frames == 0:
+                # Convert to grayscale for face detection
+                gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-    # Preprocess the frame
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+                # Detect faces in the image
+                faces = face_cascade.detectMultiScale(
+                    gray,
+                    scaleFactor=1.1,
+                    minNeighbors=5,
+                    minSize=(30, 30),
+                    flags=cv2.CASCADE_SCALE_IMAGE
+                )
 
-    # Optionally, detect faces and focus on them
-    # For simplicity, we'll use the whole frame here
-    # Resize to 48x48 as expected by the model
-    gray_resized = cv2.resize(gray, (48, 48))
+                emotions_data = []
 
-    # Normalize and convert to tensor
-    img = gray_resized.astype("float32")
-    img = (img / 255.0 - 0.5) / 0.5  # Normalize (match training normalization)
-    img = np.expand_dims(img, axis=0)  # Add channel dimension
-    img = np.expand_dims(img, axis=0)  # Add batch dimension
-    img_tensor = torch.from_numpy(img).to(device)
+                for (x, y, w, h) in faces:
+                    face_roi_color = frame[y:y+h, x:x+w]
 
-    # Make prediction
-    with torch.no_grad():
-        outputs = model(img_tensor)
-        _, predicted = torch.max(outputs, 1)
-        predicted_emotion = emotion_labels[predicted.item()]
+                    # Preprocess the face region
+                    face_gray = cv2.cvtColor(face_roi_color, cv2.COLOR_BGR2GRAY)
+                    face_resized = cv2.resize(face_gray, (48, 48))
 
-    # Display the resulting frame
-    # Put the predicted emotion text on the frame
-    cv2.putText(
-        frame,
-        f"Emotion: {predicted_emotion}",
-        (10, 30),
-        cv2.FONT_HERSHEY_SIMPLEX,
-        1,
-        (0, 255, 0),
-        2,
-    )
+                    # Apply transformations
+                    face_image = transform(face_resized).unsqueeze(0).to(device)
 
-    cv2.imshow("Emotion Recognition", frame)
+                    # Make prediction
+                    with torch.no_grad():
+                        outputs = model(face_image)
+                        _, predicted = torch.max(outputs, 1)
+                        predicted_emotion = emotion_labels[predicted.item()]
 
-    # Break the loop on 'q' key press
-    if cv2.waitKey(1) & 0xFF == ord("q"):
-        break
+                    # Append the face coordinates and emotion to the list
+                    emotions_data.append({
+                        'x': int(x),
+                        'y': int(y),
+                        'w': int(w),
+                        'h': int(h),
+                        'emotion': predicted_emotion
+                    })
 
-# When everything done, release the capture
-cap.release()
-cv2.destroyAllWindows()
+                # Send the data back to the client
+                data = {
+                    'emotions': emotions_data
+                }
+                await websocket.send(json.dumps(data))
+            else:
+                # For frames that are not processed, send an empty message or skip
+                # Here, we choose to send an empty message
+                await websocket.send(json.dumps({}))
+        except Exception as e:
+            print(f"Error: {e}")
+            await websocket.send(json.dumps({'error': 'Error processing image'}))
+
+async def main():
+    async with websockets.serve(process_image, "localhost", 6789):
+        print("WebSocket server started on ws://localhost:6789")
+        await asyncio.Future()  # Run forever
+
+if __name__ == "__main__":
+    asyncio.run(main())
