@@ -1,0 +1,36 @@
+{
+	"folders": [
+		{
+			"name": "project0",
+			"path": ".."
+		},
+		{
+			"name": "frontend-service",
+			"path": "../frontend-service"
+		},
+		{
+			"name": "inventory-service",
+			"path": "../inventory-service"
+		},
+		{
+			"name": "inventory-service-db",
+			"path": "../inventory-service-db"
+		},
+		{
+			"name": "digit-recognition-service",
+			"path": "../digit-recognition-service"
+		},
+		{
+			"name": "docs",
+			"path": "../docs"
+		},
+		{
+			"name": "nginx",
+			"path": "../nginx"
+		},
+		{
+			"name": "emotion-detection-service",
+			"path": "../emotion-detection-service"
+		}
+	]
+}

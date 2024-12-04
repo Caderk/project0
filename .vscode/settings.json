@@ -1,0 +1,11 @@
+{
+    "files.exclude": {
+        "digit-recognition-service": true,
+        "emotion-detection-service": true,
+        "frontend-service": true,
+        "inventory-service": true,
+        "inventory-service-db": true,
+        "nginx": true,
+        "docs": true
+    }
+}
