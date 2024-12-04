@@ -1,6 +1,5 @@
-
-
 # Installing nodemon
+
 For development, we can install nodemon so changes take effect inmediatly:
 
 ```
