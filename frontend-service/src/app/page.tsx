@@ -7,8 +7,8 @@ export default function Page() {
       <h1>Welcome to my personal project site!</h1>
       <p>
         This project is a full-stack web application designed to showcase
-        personal projects and demonstrate proficiency in modern web development
-        technologies.
+        personal projects, demonstrate proficiency in modern web development
+        technologies, and for my own experimentation.
       </p>
       <p>
         It features a responsive frontend built with Next.js and TypeScript, it
