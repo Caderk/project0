@@ -1,6 +1,5 @@
 import cv2
 import torch
-import torch.nn as nn
 from torchvision import transforms
 import numpy as np
 import asyncio
