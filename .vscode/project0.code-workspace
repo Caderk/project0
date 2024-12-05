@@ -21,16 +21,16 @@
 			"path": "../digit-recognition-service"
 		},
 		{
-			"name": "docs",
-			"path": "../docs"
+			"name": "emotion-detection-service",
+			"path": "../emotion-detection-service"
 		},
 		{
 			"name": "nginx",
 			"path": "../nginx"
 		},
 		{
-			"name": "emotion-detection-service",
-			"path": "../emotion-detection-service"
+			"name": "docs",
+			"path": "../docs"
 		}
 	]
 }
