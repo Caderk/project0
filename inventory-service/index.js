@@ -1,13 +1,9 @@
 const express = require('express');
 const morgan = require("morgan");
-const cors = require('cors');  // Import the cors package
 const app = express();
 const HOST = process.env.HOST;
 const PORT = process.env.PORT;
 const path = require('path');
-
-// Enable CORS for all origins (adjust this in production to specific origins)
-app.use(cors());
 
 // Middleware to parse JSON
 app.use(express.json());
