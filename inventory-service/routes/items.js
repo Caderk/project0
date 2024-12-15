@@ -1,21 +1,22 @@
+// Import express
 const express = require('express');
 const router = express.Router();
-const Joi = require('joi');
-const { v4: uuidv4 } = require('uuid');
-const pool = require('../db');
 
 // In-memory data store (for example purposes)
+const { v4: uuidv4 } = require('uuid');
 const items = [
     { id: uuidv4(), name: 'Item 1' },
     { id: uuidv4(), name: 'Item 2' }
 ];
 
 // Validation schema
+const Joi = require('joi');
 const itemSchema = Joi.object({
     name: Joi.string().min(3).max(32).required()
 });
 
 // Get all items
+const pool = require('../db');
 router.get('/', async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM items');
