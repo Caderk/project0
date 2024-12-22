@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useRef, useEffect } from "react";
+import styles from '@styles/digit-recognition/Digit-recognition.module.css'
+
 
 export default function Canvas({ grid, setGrid, gridSize }) {
   const containerRef = useRef(null);
@@ -90,6 +92,7 @@ export default function Canvas({ grid, setGrid, gridSize }) {
   return (
     <div
       ref={containerRef}
+      className={styles.canvas}
       style={{
         display: "grid",
         gridTemplateColumns: `repeat(${gridSize}, 1fr)`,
