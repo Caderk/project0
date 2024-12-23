@@ -12,8 +12,8 @@
                     "description": "Successful response.",
                     "body": {
                         "message": "Welcome to the inventory-service API",
-                        "version": "1.0.1",
-                        "documentation": "https://caderk.ddns.net/inventory-service/api-docs"
+                        "version": "1.0.0",
+                        "documentation": "/api-docs"
                     }
                 }
             }
