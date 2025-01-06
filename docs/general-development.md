@@ -121,7 +121,17 @@ cat .ssh/id_ed25519.pub
 We add it to our Github account using this link:
 <https://github.com/settings/ssh/new>
 
-### Cloning the repository
+### Initializing a new repository
+
+Source: <https://docs.github.com/en/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github#initializing-a-git-repository>
+
+```bash
+git init -b main
+git add .
+git commit -m "First commit"
+```
+
+### Cloning a repository
 
 To clone the repository:
 
@@ -133,6 +143,43 @@ To create a local develop branch tracking origin develop branch:
 
 ```bash
 git checkout -b develop origin/develop
+```
+
+### Installing Github CLI
+
+Source: <https://github.com/cli/cli/blob/trunk/docs/install_linux.md#debian-ubuntu-linux-raspberry-pi-os-apt>
+
+```bash
+(type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y)) \
+	&& sudo mkdir -p -m 755 /etc/apt/keyrings \
+        && out=$(mktemp) && wget -nv -O$out https://cli.github.com/packages/githubcli-archive-keyring.gpg \
+        && cat $out | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
+	&& sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
+	&& echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+	&& sudo apt update \
+	&& sudo apt install gh -y
+```
+
+### Adding a local repository to Github
+
+Authenticate using Github CLI
+
+```bash
+gh auth login
+```
+
+Create a new remote repository
+
+```bash
+gh repo create
+```
+
+In case you coudn't directly push your local repository using the last command, use this:
+
+```bash
+git remote add origin REMOTE-URL
+git remote -v
+git push origin main
 ```
 
 ## Setting up Docker
