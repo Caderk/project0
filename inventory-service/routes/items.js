@@ -15,8 +15,10 @@ const itemSchema = Joi.object({
     name: Joi.string().min(3).max(32).required()
 });
 
-// Get all items
+// Initiate database connection pool
 const pool = require('../db');
+
+// Get all items
 router.get('/', async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM items');
@@ -38,6 +40,7 @@ router.get('/stream', (req, res) => {
 
     // Add client to the list
     clients.push(res);
+    console.log('Client connected');
 
     // Remove client when connection is closed
     req.on('close', () => {
