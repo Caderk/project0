@@ -1,21 +1,11 @@
 # imports -------------------------------------------------------------------------#
 import os
 import argparse
-
-p = argparse.ArgumentParser()
-p.add_argument("--gpu", default=0, type=int)
-args, unknown = p.parse_known_args()
-
-os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-os.environ["CUDA_VISIBLE_DEVICES"] = str(args.gpu)
-
 import numpy as np
-import math
 import torch
-import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
-from torchvision import datasets, transforms
+from torchvision import transforms  # For data augmentation
 from torchinfo import summary
 from ema import EMA
 from datasets import MnistDataset
@@ -24,9 +14,12 @@ from models.modelM3 import ModelM3
 from models.modelM5 import ModelM5
 from models.modelM7 import ModelM7
 
-print(torch.cuda.is_available())
-print(torch.cuda.device_count())
-print(torch.cuda.get_device_name(0))
+p = argparse.ArgumentParser()
+p.add_argument("--gpu", default=0, type=int)
+args, unknown = p.parse_known_args()
+
+os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
+os.environ["CUDA_VISIBLE_DEVICES"] = str(args.gpu)
 
 
 def run(p_seed=0, p_epochs=150, p_kernel_size=5, p_logdir="temp"):
@@ -52,12 +45,16 @@ def run(p_seed=0, p_epochs=150, p_kernel_size=5, p_logdir="temp"):
 
     # enable GPU usage ------------------------------------------------------------#
     use_cuda = torch.cuda.is_available()
-    device = torch.device("cuda" if use_cuda else "cpu")
+    print("Is CUDA available?: ", use_cuda)
+
     if not use_cuda:
-        print("WARNING: CPU will be used for training.")
+        print("WARNING: CPU would be used for training.")
         exit(0)
     else:
+        device = torch.device("cuda" if use_cuda else "cpu")
         print(f"Using device: {device}")
+        print("Number of GPUs available: ", torch.cuda.device_count())
+        print("GPUs properties: ", torch.cuda.get_device_properties(0))
 
     # data augmentation methods ---------------------------------------------------#
     transform = transforms.Compose(
