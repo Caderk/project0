@@ -5,10 +5,12 @@ import numpy as np
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List
-from models import modelM3, modelM5, modelM7
+from models.modelM3 import ModelM3
+from models.modelM5 import ModelM5
+from models.modelM7 import ModelM7
 
 # Load the model
-model = modelM5.ModelM5()
+model = ModelM5()
 model.load_state_dict(
     torch.load("logs/modelM5/model009.pth", map_location="cpu", weights_only=True)
 )
