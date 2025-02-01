@@ -28,4 +28,3 @@ class EMA:
             if param.requires_grad:
                 assert name in self.shadow
                 param.data = self.original[name]
-

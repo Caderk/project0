@@ -7,28 +7,35 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List
 
-# Initialize the FastAPI app
-app = FastAPI(root_path="/digit-recognition-service")
-
 # Load the model
 model = ModelM5()
-model.load_state_dict(torch.load('logs/modelM5/model009.pth', map_location='cpu', weights_only=True))
+model.load_state_dict(
+    torch.load("logs/modelM5/model009.pth", map_location="cpu", weights_only=True)
+)
 model.eval()
 
 # Move the model to the appropriate device
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model.to(device)
 
 # Define the transformations
-transform = transforms.Compose([
-    transforms.ToTensor(),
-    # Include normalization if used during training
-    # transforms.Normalize((mean,), (std,)),
-])
+transform = transforms.Compose(
+    [
+        transforms.ToTensor(),
+        # Include normalization if used during training
+        # transforms.Normalize((mean,), (std,)),
+    ]
+)
+
 
 # Define the request body schema
 class ImageData(BaseModel):
     image: List[List[int]]  # 2D list representing the 28x28 image array
+
+
+# Initialize the FastAPI app
+app = FastAPI(root_path="/digit-recognition-service")
+
 
 @app.post("/predict")
 async def predict(data: ImageData):
@@ -45,7 +52,7 @@ async def predict(data: ImageData):
         raise HTTPException(status_code=400, detail=str(e))
 
     # Convert the NumPy array to a PIL Image
-    image = Image.fromarray(image_array, mode='L')
+    image = Image.fromarray(image_array, mode="L")
 
     # Apply the transformations
     input_tensor = transform(image).unsqueeze(0).to(device)  # Shape: (1, 1, 28, 28)
