@@ -21,6 +21,10 @@
 			"path": "../digit-recognition-service"
 		},
 		{
+			"name": "digit-recognition-mlops",
+			"path": "../digit-recognition-mlops"
+		},
+		{
 			"name": "emotion-detection-service",
 			"path": "../emotion-detection-service"
 		},
@@ -32,5 +36,17 @@
 			"name": "docs",
 			"path": "../docs"
 		}
-	]
+	],
+	"settings": {
+		"files.exclude": {
+			"digit-recognition-service": true,
+			"digit-recognition-mlops": true,
+			"emotion-detection-service": true,
+			"frontend-service": true,
+			"inventory-service": true,
+			"inventory-service-db": true,
+			"nginx": true,
+			"docs": true
+		}
+	}
 }
