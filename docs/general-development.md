@@ -1,57 +1,8 @@
 # General development tips
 
-## Working with the remote machine
+## Setting up secure connections
 
-### To ssh to remote machine
-
-Install openssh-server on the remote machine:
-
-```bash
-sudo apt install openssh-server
-```
-
-We can copy our ssh public key on the remote machine to authenticate without using a password:
-
-```bash
-ssh-copy-id carlos@192.168.1.82
-```
-
-We can connect to the remote machine using its private ip:
-
-```bash
-ssh -a 192.168.1.82
-```
-
-### Transfering files
-
-We can use rsync to transfer files from the development to production environments:
-
-```bash
-rsync -avz --delete --filter=":- .gitignore" /home/carlos/projects/project0 carlos@192.168.1.82:/home/carlos/projects
-```
-
-If you want it the other way around:
-
-```bash
-rsync -avz --delete --filter=":- .gitignore" carlos@192.168.1.82:/home/carlos/projects/project0 /home/carlos/projects
-```
-
-## Acquiring SSL certification (Do only on the production environment)
-
-Source: <https://certbot.eff.org/instructions?ws=other&os=snap>
-
-To acquire an SSL certificate for our DNS we can use certbot:
-
-```bash
-sudo snap install --classic certbot
-sudo certbot certonly --standalone -d caderk.ddns.net
-```
-
-We should in theory have a certbot command to renew the certificate in "systemctl list-timers".
-
-## Setting up Version Control
-
-### Generating a new SSH key to connect to Github
+### Generating a new SSH key
 
 Source: <https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#generating-a-new-ssh-key>
 
@@ -63,7 +14,7 @@ ssh-keygen -t ed25519 -C "carlos.radtke.a@gmail.com"
 
 Replace with your email address accordingly.
 
-### Auto-launching ssh-agent on Git
+### Auto-launching ssh-agent
 
 Source: <https://docs.github.com/en/authentication/connecting-to-github-with-ssh/working-with-ssh-key-passphrases#auto-launching-ssh-agent-on-git-for-windows>
 
@@ -100,50 +51,7 @@ fi
 
 unset env
 ```
-
-### Configuring Git credentials
-
-When we need to configure git so we can commit:
-
-```bash
-git config --global user.name "Carlos Radtke"
-git config --global user.email carlos.radtke.a@gmail.com
-```
-
-### Adding the SSH Key to Github
-
-We need to copy the public key we just generated.
-
-```bash
-cat .ssh/id_ed25519.pub
-```
-
-We add it to our Github account using this link:
-<https://github.com/settings/ssh/new>
-
-### Initializing a new repository
-
-Source: <https://docs.github.com/en/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github#initializing-a-git-repository>
-
-```bash
-git init -b main
-git add .
-git commit -m "First commit"
-```
-
-### Cloning a repository
-
-To clone the repository:
-
-```bash
-git clone git@github.com:Caderk/project0.git
-```
-
-To create a local develop branch tracking origin develop branch:
-
-```bash
-git checkout -b develop origin/develop
-```
+## Setting up Version Control
 
 ### Installing Github CLI
 
@@ -160,13 +68,32 @@ Source: <https://github.com/cli/cli/blob/trunk/docs/install_linux.md#debian-ubun
 	&& sudo apt install gh -y
 ```
 
-### Adding a local repository to Github
-
-Authenticate using Github CLI
+### Authenticate using Github CLI
 
 ```bash
 gh auth login
 ```
+
+Follow the interactive prompts to authenticate with GitHub.
+
+### Adding the SSH Key to Github
+
+We can add the file directly using Github CLI.
+
+```bash
+gh ssh-key add .ssh/id_ed25519.pub -t "carlos-pc"
+```
+
+### Configuring Git credentials
+
+When we need to configure git so we can commit:
+
+```bash
+git config --global user.name "Carlos Radtke"
+git config --global user.email carlos.radtke.a@gmail.com
+```
+
+### Adding an existing local repository to Github (If repository does not exists on remote)
 
 Create a new remote repository
 
@@ -174,12 +101,87 @@ Create a new remote repository
 gh repo create
 ```
 
+### Cloning a repository (If repository already exists on remote but not locally)
+
+To clone the repository (If it is a private repository you need to be a collaborator):
+
+```bash
+git clone git@github.com:Caderk/project0.git
+```
+
+If the repositoy is empty, we would need to do a first commit to create a branch:
+```bash
+echo "# New Project!" >> README.md # We need at least one file in the repository
+git add .
+git commit -m "First commit"
+git push
+git switch -c develop
+git push -u origin develop
+```
+
+To create a local develop branch tracking origin develop branch (if it has one):
+
+```bash
+
+git checkout -b develop origin/develop
+```
+
+### Initializing a new repository (If repository does not exists locally)
+
+Source: <https://docs.github.com/en/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github#initializing-a-git-repository>
+
+
+There needs to be at least one file on the local repository.
+```bash
+git init -b main
+echo "# CalculadoraF29" >> README.md # We need at least one file in the repository
+git add .
+git commit -m "First commit"
+```
+
+
 In case you coudn't directly push your local repository using the last command, use this:
 
 ```bash
 git remote add origin REMOTE-URL
 git remote -v
 git push origin main
+```
+
+## Working with a remote machine
+
+### To ssh to remote machine
+
+Install openssh-server on the remote machine:
+
+```bash
+sudo apt install openssh-server
+```
+
+We can copy our ssh public key on the remote machine to authenticate without using a password:
+
+```bash
+ssh-copy-id carlos@192.168.1.82
+```
+
+We can connect to the remote machine using its private ip:
+
+```bash
+ssh -a 192.168.1.82
+```
+
+### Transfering files
+
+We can use rsync to transfer files from the development to production environments:
+
+```bash
+rsync -avz --delete --filter=":- .gitignore" /home/carlos/projects/project0 carlos@192.168.1.82:/home/carlos/projects
+```
+
+If you want it the other way around:
+
+```bash
+rsync -avz --delete --filter=":- .gitignore" carlos@192.168.1.82:/home/carlos/projects/project0 /home/carlos/projects
 ```
 
 ## Setting up Docker
@@ -315,3 +317,16 @@ For an unknown reason, I needed to install setuptools:
 ```bash
 pip install --upgrade setuptools
 ```
+
+## Acquiring SSL certification (Do only on the production environment)
+
+Source: <https://certbot.eff.org/instructions?ws=other&os=snap>
+
+To acquire an SSL certificate for our DNS we can use certbot:
+
+```bash
+sudo snap install --classic certbot
+sudo certbot certonly --standalone -d caderk.ddns.net
+```
+
+We should in theory have a certbot command to renew the certificate in "systemctl list-timers".
