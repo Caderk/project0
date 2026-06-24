@@ -1,0 +1,102 @@
+    1  sudo apt update
+    2  sudo apt install timeshift -y
+    3  sudo timeshift --list-devices
+    4  sudo timeshift --create --comments "fresh install" --snapshot-device /dev/sda
+    5  exit
+    6  poweroff
+    7  sudo nano /etc/systemd/logind.conf
+    8  exit
+    9  sudo timeshift --create --comments "updated behavior on lid close" --snapshot-device /dev/sda
+   10  sudo ethtool enp3s0 | grep -i wake
+   11  sudo ethtool -s enp3s0 wol g
+   12  sudo ethtool enp3s0 | grep -i wake
+   13  sudo nano /etc/netplan/00-installer-config.yaml
+   14  sudo netplan try
+   15  sudo netplan apply
+   16  cat /run/systemd/network/10-netplan-enp3s0.link
+   17  sudo cat /run/systemd/network/10-netplan-enp3s0.link
+   18  sudo reboot
+   19  sudo systemctl suspend
+   20  reboot
+   21  clear
+   22  sudo tcpdump -i enp3s0 -nn ether proto 0x0842 or udp port 9
+   23  sudo tcpdump -i enp3s0 -nn icmp
+   24  ip a
+   25  clear
+   26  sudo tcpdump -i enp3s0 -nn 'udp port 7 or udp port 9 or ether proto 0x0842'
+   27  clear
+   28  poweroff
+   29  clear
+   30  sudo tcpdump -i enp3s0 -nn 'udp port 7 or udp port 9 or ether proto 0x0842'
+   31  clear
+   32  sudo systemctl suspend
+   33  reboot
+   34  history
+   35  sudo ethtool enp3s0 | grep -i wake
+   36  clear
+   37  history
+   38  sudo ethtool -s enp3s0 wol g
+   39  sudo ethtool enp3s0 | grep -i wake
+   40  clear
+   41  sudo nano /etc/netplan/00-installer-config.yaml
+   42  sudo netplan apply
+   43  sudo cat /run/systemd/network/10-netplan-enp3s0.link
+   44  sudo reboot
+   45  sudo ethtool enp3s0 | grep -i wake
+   46  sudo systemctl suspend
+   47  sudo timeshift --list
+   48  sudo timeshift --delete
+   49  clear
+   50  sudo timeshift --create --comments "setup wakeonlan" --snapshot-device /dev/sda
+   51  sudo timeshift --list
+   52  exit
+   53  clear
+   54  sudo mkdir -p /etc/apt/keyrings
+   55  sudo curl -L -o /etc/apt/keyrings/syncthing-archive-keyring.gpg https://syncthing.net/release-key.gpg
+   56  echo "deb [signed-by=/etc/apt/keyrings/syncthing-archive-keyring.gpg] https://apt.syncthing.net/ syncthing stable-v2" | sudo tee /etc/apt/sources.list.d/syncthing.list
+   57  sudo apt-get update
+   58  sudo apt-get install syncthing
+   59  clear
+   60  syncthing
+   61  clear
+   62  syncthing --help
+   63  syncthing device-id
+   64  printf "Package: *\nPin: origin apt.syncthing.net\nPin-Priority: 990\n"   | sudo tee /etc/apt/preferences.d/syncthing.pref
+   65  syncthing --version
+   66  df -h /mnt/data
+   67  sudo mkdir -p /mnt/data/sync
+   68  sudo chown -R carlos:carlos /mnt/data/sync
+   69  sudo systemctl enable --now syncthing@carlos.service
+   70  systemctl status syncthing@carlos.service
+   71  exit
+   72  clear
+   73  exit
+   74  ll
+   75  ll /mnt/data/sync/
+   76  lsb_release -a
+   77  exit
+   78  ll
+   79  ll .ssh/
+   80  cat .ssh/authorized_keys
+   81  sudo nano /etc/ssh/sshd_config.d/99-hardening.conf
+   82  sudo sshd -t
+   83  sudo systemctl restart ssh
+   84  clear
+   85  sudo ufw default deny incoming
+   86  sudo ufw default allow outgoing
+   87  sudo ufw allow 2222/tcp
+   88  sudo ufw enable
+   89  clear
+   90  sudo ufw status verbose
+   91  sudo apt update
+   92  sudo apt install fail2ban
+   93  sudo nano /etc/fail2ban/jail.local
+   94  sudo systemctl enable --now fail2ban
+   95  sudo fail2ban-client status sshd
+   96  systemctl list-timers | grep apt
+   97  cat /etc/apt/apt.conf.d/20auto-upgrades
+   98  sudo nano /etc/apt/apt.conf.d/50unattended-upgrades
+   99  clear
+  100  sudo ss -tulpn
+  101  clear
+  102  history
